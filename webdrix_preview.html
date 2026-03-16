@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Webdrix – Digital Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#05080f;--bg2:#080d18;--bg3:#0c1220;--surface:#111827;--surface2:#1a2337;--surface3:#222f45;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);
+  --accent:#0ea5e9;--accent2:#6366f1;--accent3:#10b981;
+  --glow:rgba(14,165,233,0.18);--glow2:rgba(99,102,241,0.12);
+  --text:#e2e8f0;--muted:#8b9cb8;--white:#fff;
+  --r:10px;--r2:16px;--r3:24px;
+  --shadow:0 4px 24px rgba(0,0,0,0.5);--shadow2:0 16px 64px rgba(0,0,0,0.7);
+  --tr:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --font:'Poppins',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}ul{list-style:none}
+h1,h2,h3,h4,h5,h6{line-height:1.2;color:var(--white);font-weight:700}
+img{max-width:100%;display:block}
+.container{max-width:1180px;margin:0 auto;padding:0 28px}
+.section{padding:96px 0}
+.bg2{background:var(--bg2)}
+.bg3{background:var(--bg3)}
+
+/* TYPOGRAPHY */
+.tag{font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+.tag::before{content:'';width:20px;height:2px;background:var(--accent);border-radius:2px}
+.h1{font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;letter-spacing:-0.02em}
+.h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-0.01em}
+.h3{font-size:1.2rem;font-weight:600}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+.lead{font-size:1.05rem;color:var(--muted);line-height:1.8;font-weight:400}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0.8rem 1.8rem;background:var(--accent);color:var(--bg);font-family:var(--font);font-weight:600;font-size:0.88rem;border-radius:var(--r);border:2px solid var(--accent);cursor:pointer;transition:var(--tr);white-space:nowrap;letter-spacing:0.01em}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+.btn:hover{background:transparent;color:var(--accent);box-shadow:0 0 28px var(--glow);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--accent);border-color:rgba(14,165,233,0.3)}
+.btn-ghost:hover{background:rgba(14,165,233,0.08);border-color:var(--accent)}
+.btn-white{background:var(--white);color:var(--bg);border-color:var(--white)}
+.btn-white:hover{background:transparent;color:var(--white)}
+.btn-lg{padding:1rem 2.2rem;font-size:0.95rem;border-radius:12px}
+.btn-sm{padding:0.5rem 1.1rem;font-size:0.78rem;border-radius:8px}
+
+/* NAV */
+.nav-wrap{position:sticky;top:0;z-index:1000;background:rgba(5,8,15,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-size:1.55rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;cursor:pointer}
+.logo span{color:var(--accent)}
+.nav-menu{display:flex;align-items:center;gap:4px}
+.nav-link{padding:0.45rem 0.9rem;font-size:0.875rem;font-weight:500;color:var(--muted);border-radius:8px;transition:var(--tr);cursor:pointer;position:relative}
+.nav-link:hover,.nav-link.active{color:var(--white)}
+.nav-link.active::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--accent);border-radius:2px}
+.nav-drop{position:relative}
+.nav-drop-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);min-width:230px;padding:8px;opacity:0;visibility:hidden;transition:var(--tr);box-shadow:var(--shadow2)}
+.nav-drop:hover .nav-drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.drop-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-size:0.85rem;color:var(--muted);cursor:pointer;transition:var(--tr)}
+.drop-item:hover{background:var(--surface2);color:var(--accent)}
+.drop-icon{font-size:1.1rem;width:28px;text-align:center}
+
+/* PAGE SWITCHER (hidden - for internal use only) */
+.page{display:none}
+.page.active{display:block}
+
+/* ═══════════ HERO ═══════════ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 20%,rgba(14,165,233,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 10% 80%,rgba(99,102,241,0.06) 0%,transparent 50%)}
+.hero-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.04) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:700px;height:700px;background:rgba(14,165,233,0.07);top:-20%;right:-10%;animation:orbFloat 8s ease-in-out infinite}
+.orb2{width:500px;height:500px;background:rgba(99,102,241,0.07);bottom:-10%;left:-5%;animation:orbFloat 10s ease-in-out infinite reverse}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+
+/* 3D floating shapes */
+.hero-3d-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:520px;height:520px;perspective:1000px}
+.hero-3d-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:rotateCard 20s linear infinite}
+.f-shape{position:absolute;border-radius:20px;backdrop-filter:blur(10px)}
+.shape1{width:240px;height:280px;top:10%;left:10%;background:linear-gradient(135deg,rgba(14,165,233,0.12),rgba(99,102,241,0.08));border:1px solid rgba(14,165,233,0.2);transform:translateZ(40px) rotateX(8deg) rotateY(-12deg)}
+.shape2{width:180px;height:200px;top:30%;right:5%;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(16,185,129,0.06));border:1px solid rgba(99,102,241,0.15);transform:translateZ(80px) rotateX(-5deg) rotateY(15deg)}
+.shape3{width:130px;height:130px;bottom:10%;left:20%;background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(14,165,233,0.06));border:1px solid rgba(16,185,129,0.2);border-radius:50%;transform:translateZ(60px)}
+.shape4{width:80px;height:80px;top:5%;right:30%;background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.15);border-radius:50%;transform:translateZ(100px)}
+.img-in-shape{width:100%;height:100%;object-fit:cover;border-radius:18px;opacity:0.7}
+@keyframes rotateCard{0%,100%{transform:rotateY(0deg) rotateX(0deg)}25%{transform:rotateY(5deg) rotateX(3deg)}50%{transform:rotateY(-3deg) rotateX(-4deg)}75%{transform:rotateY(-6deg) rotateX(2deg)}}
+
+.hero-content{position:relative;z-index:2;max-width:680px;padding:120px 0 80px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.25);color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:50px;margin-bottom:1.75rem}
+.hero-badge-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.hero-title{font-size:clamp(2.6rem,5.5vw,4.5rem);font-weight:800;letter-spacing:-0.025em;line-height:1.08;margin-bottom:1.5rem}
+.hero-title .line2{display:block;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.1rem;color:var(--muted);max-width:560px;margin-bottom:2.5rem;font-weight:400;line-height:1.8}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:3.5rem}
+.hero-stats{display:flex;gap:0;border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;background:rgba(255,255,255,0.02)}
+.h-stat{padding:18px 28px;text-align:center;border-right:1px solid var(--border2)}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-size:1.8rem;font-weight:800;color:var(--white);display:block;letter-spacing:-0.02em}
+.h-stat-l{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+
+/* SECTION HEADER */
+.sh{margin-bottom:3rem}
+.sh.center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.sh .tag{margin-bottom:12px}
+.sh .h2{margin-bottom:14px}
+.sh .lead{max-width:580px}
+.sh-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:3rem;flex-wrap:wrap}
+
+/* CARDS - 3D hover effect */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);transition:var(--tr);position:relative;overflow:hidden;transform-style:preserve-3d;perspective:1000px}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,165,233,0.05),transparent);opacity:0;transition:var(--tr)}
+.card:hover{border-color:rgba(14,165,233,0.25);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(14,165,233,0.1);transform:translateY(-6px) rotateX(2deg)}
+.card:hover::before{opacity:1}
+
+/* IMAGE UTILS */
+.img-cover{width:100%;height:100%;object-fit:cover;display:block}
+.img-wrap{overflow:hidden;border-radius:var(--r2)}
+
+/* ═══ SERVICES GRID ═══ */
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.srv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;perspective:800px}
+.srv-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:var(--tr)}
+.srv-card:hover{border-color:rgba(14,165,233,0.3);transform:translateY(-8px) rotateX(3deg);box-shadow:0 24px 60px rgba(0,0,0,0.5)}
+.srv-card:hover::after{transform:scaleX(1)}
+.srv-num{font-size:0.68rem;font-weight:700;letter-spacing:0.15em;color:var(--accent);text-transform:uppercase;margin-bottom:1.2rem;opacity:0.7}
+.srv-icon-wrap{width:56px;height:56px;border-radius:14px;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.1rem;transition:var(--tr)}
+.srv-card:hover .srv-icon-wrap{background:rgba(14,165,233,0.18);transform:rotateY(20deg) scale(1.05)}
+.srv-card h3{font-size:1rem;margin-bottom:0.6rem}
+.srv-card p{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+.srv-arrow{font-size:1rem;color:var(--accent);transition:var(--tr)}
+.srv-card:hover .srv-arrow{transform:translateX(5px)}
+
+/* ABOUT / TWO-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.two-col.flip{direction:rtl}.two-col.flip>*{direction:ltr}
+.img-card{border-radius:var(--r3);overflow:hidden;position:relative}
+.img-card img{width:100%;height:480px;object-fit:cover;display:block}
+.img-badge{position:absolute;bottom:24px;left:24px;background:rgba(5,8,15,0.9);backdrop-filter:blur(12px);border:1px solid var(--border2);border-radius:var(--r2);padding:16px 20px}
+.img-badge strong{display:block;font-size:1.5rem;font-weight:800;color:var(--accent)}
+.img-badge span{font-size:0.75rem;color:var(--muted)}
+
+/* FEATURE LIST */
+.feat-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.feat-item{display:flex;gap:14px;align-items:flex-start}
+.feat-check{width:22px;height:22px;border-radius:6px;background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.feat-check svg{width:12px;height:12px;color:var(--accent)}
+.feat-item h4{font-size:0.92rem;margin-bottom:2px}
+.feat-item p{font-size:0.82rem;color:var(--muted)}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;text-align:center;transition:var(--tr)}
+.stat-card:hover{border-color:rgba(14,165,233,0.25);transform:translateY(-4px)}
+.stat-n{font-size:2.5rem;font-weight:800;color:var(--accent);letter-spacing:-0.02em;display:block}
+.stat-l{font-size:0.8rem;color:var(--muted);margin-top:4px}
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;transition:var(--tr)}
+.testi-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-4px)}
+.testi-card.featured{background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.05));border-color:rgba(14,165,233,0.2)}
+.stars{color:#f59e0b;font-size:0.85rem;letter-spacing:3px;margin-bottom:1rem}
+.testi-quote{font-size:0.88rem;color:var(--muted);line-height:1.85;font-style:italic;margin-bottom:1.5rem;position:relative;padding-left:1rem;border-left:2px solid rgba(14,165,233,0.3)}
+.testi-author{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.avatar-fallback{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.78rem;color:white;flex-shrink:0}
+.testi-author strong{display:block;font-size:0.87rem}
+.testi-author span{font-size:0.75rem;color:var(--muted)}
+
+/* PROCESS */
+.process-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.process-grid::before{content:'';position:absolute;top:42px;left:10%;right:10%;height:1px;background:linear-gradient(to right,var(--accent),var(--accent2),var(--accent));opacity:0.2}
+.proc-step{text-align:center;padding:0 1rem}
+.proc-num{width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid rgba(14,165,233,0.3);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--accent);margin:0 auto 1.2rem;position:relative;z-index:1;transition:var(--tr)}
+.proc-step:hover .proc-num{background:var(--accent);color:var(--bg);border-color:var(--accent);transform:scale(1.1)}
+.proc-step h4{font-size:0.88rem;margin-bottom:0.4rem}
+.proc-step p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* PORTFOLIO */
+.portfolio-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:220px;gap:1.2rem}
+.port-item{border-radius:var(--r2);overflow:hidden;position:relative;cursor:pointer}
+.port-item.c4{grid-column:span 4}
+.port-item.c5{grid-column:span 5}
+.port-item.c7{grid-column:span 7}
+.port-item.c6{grid-column:span 6}
+.port-item.r2{grid-row:span 2}
+.port-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.port-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,15,0.92) 0%,rgba(5,8,15,0.3) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;opacity:0;transition:var(--tr)}
+.port-item:hover .port-img{transform:scale(1.06)}
+.port-item:hover .port-overlay{opacity:1}
+.port-cat{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.port-title{font-size:1rem;color:var(--white);font-weight:600}
+
+/* CTA */
+.cta-sec{position:relative;padding:110px 0;overflow:hidden;text-align:center}
+.cta-bg-img{position:absolute;inset:0;object-fit:cover;opacity:0.06}
+.cta-gradient{position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,165,233,0.12),rgba(99,102,241,0.1))}
+.cta-content{position:relative;z-index:1;max-width:720px;margin:0 auto}
+.cta-content .h2{font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:1.2rem}
+.cta-content .lead{margin-bottom:2.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{background:var(--bg2);border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1.5fr;gap:3rem;padding:72px 0 56px}
+.footer-brand .logo{margin-bottom:1rem;display:block}
+.footer-brand p{font-size:0.85rem;color:var(--muted);line-height:1.8;max-width:260px;margin-bottom:1.5rem}
+.socials{display:flex;gap:8px}
+.social-btn{width:36px;height:36px;border:1px solid var(--border2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);transition:var(--tr);cursor:pointer}
+.social-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.footer-col h5{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.2rem}
+.footer-col ul li{margin-bottom:8px}
+.footer-col ul li a{font-size:0.85rem;color:var(--muted);transition:var(--tr);cursor:pointer}
+.footer-col ul li a:hover{color:var(--accent);padding-left:4px}
+.footer-contact-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.footer-contact-item span:first-child{font-size:1rem;margin-top:1px}
+.footer-contact-item a{font-size:0.83rem;color:var(--muted);transition:var(--tr)}
+.footer-contact-item a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--border);padding:20px 0;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:0.8rem;color:var(--muted)}
+.footer-bottom a{color:var(--accent);font-size:0.8rem}
+
+/* PAGE HERO */
+.page-hero{padding:120px 0 80px;position:relative;overflow:hidden}
+.page-hero-bg{position:absolute;inset:0;background:var(--bg2)}
+.page-hero-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.03) 1px,transparent 1px);background-size:72px 72px}
+.page-hero-glow{position:absolute;width:600px;height:400px;border-radius:50%;background:rgba(14,165,233,0.07);filter:blur(100px);top:-100px;right:-100px}
+.page-hero-inner{position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--muted);margin-bottom:1.2rem}
+.breadcrumb a{color:var(--accent);cursor:pointer;transition:var(--tr)}
+.breadcrumb a:hover{text-decoration:underline}
+.sep{opacity:0.4}
+.page-hero h1{font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:1.2rem}
+.page-hero-desc{font-size:1.05rem;color:var(--muted);max-width:620px;line-height:1.8}
+.page-hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;flex-wrap:wrap}
+.ph-stat strong{display:block;font-size:1.7rem;font-weight:800;color:var(--white)}
+.ph-stat span{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+
+/* ═══ SERVICE PAGE SPECIFIC ═══ */
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;display:flex;gap:1.25rem;transition:var(--tr);perspective:800px}
+.tool-card:hover{border-color:rgba(14,165,233,0.25);transform:translateY(-4px) rotateX(2deg)}
+.tool-icon{font-size:2rem;flex-shrink:0;width:56px;text-align:center}
+.tool-badge{display:inline-block;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);color:var(--accent);font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:50px;margin-bottom:6px}
+.tool-card h4{font-size:0.97rem;margin-bottom:6px}
+.tool-card p{font-size:0.83rem;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.tool-tags{display:flex;flex-wrap:wrap;gap:6px}
+.t-tag{padding:3px 10px;border:1px solid var(--border2);border-radius:50px;font-size:0.72rem;color:var(--muted)}
+
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.benefit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;transition:var(--tr)}
+.benefit-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-4px) rotateX(2deg)}
+.ben-icon{font-size:1.8rem;margin-bottom:0.9rem}
+.benefit-card h4{font-size:0.95rem;margin-bottom:6px}
+.benefit-card p{font-size:0.83rem;color:var(--muted);line-height:1.7}
+
+.steps-list{display:flex;flex-direction:column;gap:1rem}
+.step-item{display:flex;gap:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;transition:var(--tr)}
+.step-item:hover{border-color:rgba(14,165,233,0.2)}
+.step-circle{width:44px;height:44px;border-radius:50%;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.3);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;color:var(--accent);flex-shrink:0}
+.step-item h4{font-size:0.97rem;margin-bottom:4px}
+.step-item p{font-size:0.85rem;color:var(--muted);line-height:1.7}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.p-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:2.25rem;position:relative;transition:var(--tr)}
+.p-card:hover{transform:translateY(-4px)}
+.p-card.popular{background:linear-gradient(135deg,rgba(14,165,233,0.07),rgba(99,102,241,0.05));border-color:rgba(14,165,233,0.35)}
+.pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--white);font-size:0.7rem;font-weight:700;padding:4px 16px;border-radius:50px;white-space:nowrap}
+.p-name{font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.p-price{font-size:2.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px}
+.p-price sub{font-size:1rem;font-weight:400;color:var(--muted)}
+.p-desc{font-size:0.83rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.p-features{display:flex;flex-direction:column;gap:8px;margin-bottom:1.75rem}
+.p-feat{display:flex;gap:8px;align-items:center;font-size:0.84rem;color:var(--muted)}
+.p-feat .ck{color:var(--accent3);font-size:0.9rem}
+.p-feat .cx{color:#ef4444;font-size:0.9rem}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--tr)}
+.faq-item:hover{border-color:rgba(14,165,233,0.2)}
+.faq-item.open{border-color:rgba(14,165,233,0.3)}
+.faq-q{width:100%;background:none;border:none;color:var(--white);font-family:var(--font);font-size:0.95rem;font-weight:600;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;gap:1rem}
+.faq-icon{width:24px;height:24px;border-radius:50%;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.9rem;color:var(--accent);transition:var(--tr)}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(14,165,233,0.2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.faq-a p{padding:0 1.5rem 1.25rem;font-size:0.88rem;color:var(--muted);line-height:1.8}
+.faq-item.open .faq-a{max-height:400px}
+
+/* RESULTS / CASE STUDIES */
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;transition:var(--tr)}
+.result-card:hover{border-color:rgba(14,165,233,0.2)}
+.rc-head{display:flex;gap:1rem;align-items:center;margin-bottom:1.5rem}
+.rc-icon{width:52px;height:52px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.rc-head h4{font-size:1rem;margin-bottom:3px}
+.rc-head span{font-size:0.78rem;color:var(--muted)}
+.rc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.rc-stat strong{display:block;font-size:1.4rem;font-weight:800;color:var(--accent)}
+.rc-stat span{display:block;font-size:0.68rem;color:var(--muted);text-transform:uppercase}
+.rc-quote{font-size:0.83rem;color:var(--muted);font-style:italic;border-left:2px solid var(--accent);padding-left:12px;line-height:1.75}
+
+/* DELIVERABLES */
+.del-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.del-card{display:flex;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;transition:var(--tr)}
+.del-card:hover{border-color:rgba(14,165,233,0.2)}
+.del-icon{font-size:1.5rem;flex-shrink:0}
+.del-body h5{font-size:0.85rem;margin-bottom:4px}
+.del-body p{font-size:0.76rem;color:var(--muted);line-height:1.6}
+
+/* INLINE TESTIMONIAL */
+.inline-testi{background:linear-gradient(135deg,rgba(14,165,233,0.07),rgba(99,102,241,0.05));border:1px solid rgba(14,165,233,0.2);border-radius:var(--r3);padding:3rem;text-align:center}
+.inline-testi blockquote{font-size:1.1rem;color:var(--text);font-style:italic;line-height:1.9;margin-bottom:1.75rem;max-width:720px;margin-left:auto;margin-right:auto}
+.it-author{display:flex;align-items:center;justify-content:center;gap:12px}
+.it-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;color:white}
+.it-author strong{display:block;font-size:0.9rem}
+.it-author span{font-size:0.78rem;color:var(--muted)}
+
+/* ═══ BLOG ═══ */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.blog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--tr)}
+.blog-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-5px)}
+.blog-img{height:220px;overflow:hidden;position:relative}
+.blog-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.blog-card:hover .blog-img img{transform:scale(1.05)}
+.blog-cat-pill{position:absolute;top:14px;left:14px;background:rgba(5,8,15,0.85);backdrop-filter:blur(8px);border:1px solid rgba(14,165,233,0.3);color:var(--accent);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:50px}
+.blog-body{padding:1.5rem}
+.blog-meta{font-size:0.75rem;color:var(--muted);margin-bottom:8px}
+.blog-card h3{font-size:1rem;line-height:1.4;margin-bottom:8px;font-weight:600}
+.blog-card p{font-size:0.83rem;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+.read-more{font-size:0.82rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:5px;transition:var(--tr)}
+.read-more:hover{gap:9px}
+
+/* ═══ BLOG SINGLE ═══ */
+.blog-single-hero{padding:100px 0 0;position:relative;overflow:hidden;background:var(--bg2)}
+.bs-hero-content{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 28px 60px}
+.bs-hero-img{width:100%;max-width:1180px;margin:0 auto;height:480px;overflow:hidden;border-radius:var(--r3) var(--r3) 0 0;position:relative}
+.bs-hero-img img{width:100%;height:100%;object-fit:cover}
+.reading-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(to right,var(--accent),var(--accent2));z-index:2000;width:0%;transition:width 0.1s}
+.bs-layout{display:grid;grid-template-columns:1fr 320px;gap:3.5rem;align-items:start;padding:60px 0 80px}
+.bs-body{min-width:0}
+.bs-body h2{font-size:1.5rem;font-weight:700;margin:2.5rem 0 1rem}
+.bs-body h3{font-size:1.15rem;font-weight:600;margin:2rem 0 0.8rem;color:var(--accent)}
+.bs-body p{font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:1.25rem}
+.bs-body ul{list-style:disc;padding-left:1.5rem;margin-bottom:1.25rem}
+.bs-body ul li{font-size:0.93rem;color:var(--muted);margin-bottom:6px;line-height:1.75}
+.pull-quote{background:linear-gradient(135deg,rgba(14,165,233,0.07),rgba(99,102,241,0.05));border:none;border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:1.5rem 2rem;margin:2.5rem 0;font-size:1.1rem;font-style:italic;color:var(--text);line-height:1.8}
+.bs-sidebar{position:sticky;top:90px}
+.sidebar-widget{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.5rem}
+.sidebar-widget h4{font-size:0.87rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.toc-list li{margin-bottom:6px}
+.toc-list li a{font-size:0.82rem;color:var(--muted);transition:var(--tr);cursor:pointer}
+.toc-list li a:hover{color:var(--accent);padding-left:4px}
+.cat-list li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.84rem;color:var(--muted);cursor:pointer;transition:var(--tr)}
+.cat-list li:last-child{border-bottom:none}
+.cat-list li:hover{color:var(--accent)}
+.cat-count{background:var(--surface2);border-radius:50px;padding:2px 8px;font-size:0.68rem}
+.author-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;display:flex;gap:1.5rem;align-items:flex-start;margin:2.5rem 0}
+.author-ava{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.author-box h4{font-size:1rem;margin-bottom:4px}
+.author-box span{font-size:0.78rem;color:var(--accent);display:block;margin-bottom:8px}
+.author-box p{font-size:0.83rem;color:var(--muted);line-height:1.7}
+.share-row{display:flex;gap:10px;flex-wrap:wrap;margin:2rem 0}
+.share-btn{padding:8px 18px;border:1px solid var(--border2);border-radius:50px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:var(--tr);background:transparent;font-family:var(--font);display:flex;align-items:center;gap:6px}
+.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem}
+.rel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--tr)}
+.rel-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-3px)}
+.rel-img{height:120px;overflow:hidden}
+.rel-img img{width:100%;height:100%;object-fit:cover}
+.rel-body{padding:1rem}
+.rel-body .blog-cat-pill{position:static;display:inline-block;margin-bottom:6px;font-size:0.65rem}
+.rel-body h4{font-size:0.87rem;line-height:1.35;font-weight:600}
+
+/* ═══ CONTACT ═══ */
+.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem}
+.contact-info h3{font-size:1.6rem;font-weight:700;margin-bottom:1rem}
+.contact-info .lead{margin-bottom:2rem}
+.c-detail{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem;margin-bottom:1rem;transition:var(--tr)}
+.c-detail:hover{border-color:rgba(14,165,233,0.2)}
+.c-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.c-detail strong{display:block;font-size:0.88rem;margin-bottom:3px}
+.c-detail a,.c-detail span{font-size:0.83rem;color:var(--muted)}
+.c-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem}
+.c-form h3{font-size:1.35rem;font-weight:700;margin-bottom:4px}
+.c-form .muted{font-size:0.85rem;margin-bottom:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.73rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:0.85rem 1rem;color:var(--white);font-family:var(--font);font-size:0.88rem;outline:none;transition:var(--tr)}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,165,233,0.08)}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-group select option{background:var(--surface)}
+.form-full{grid-column:span 2}
+
+/* ═══ ROI CALCULATOR ═══ */
+.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.roi-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem}
+.roi-results{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;position:sticky;top:90px}
+.roi-results.has-results{border-color:rgba(14,165,233,0.3);background:linear-gradient(135deg,rgba(14,165,233,0.05),rgba(99,102,241,0.03))}
+.range-input{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--surface2);outline:none;margin:8px 0 4px}
+.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer}
+.range-val{font-size:0.8rem;color:var(--accent);font-weight:600;float:right}
+.roi-metric{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;text-align:center;margin-bottom:1rem}
+.roi-metric strong{display:block;font-size:2rem;font-weight:800;color:var(--accent);letter-spacing:-0.02em}
+.roi-metric span{font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+.roi-breakdown{margin-top:1.5rem}
+.roi-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.84rem}
+.roi-row:last-child{border-bottom:none}
+.roi-row strong{color:var(--accent)}
+.roi-chart{height:8px;background:var(--surface2);border-radius:4px;margin-top:1.5rem;overflow:hidden}
+.roi-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width 0.8s ease}
+.service-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem}
+.svc-opt{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;font-size:0.82rem;cursor:pointer;transition:var(--tr);text-align:center;font-family:var(--font);color:var(--muted)}
+.svc-opt.selected{border-color:var(--accent);background:rgba(14,165,233,0.1);color:var(--accent)}
+
+/* ═══ ABOUT ═══ */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--tr);text-align:center}
+.team-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-6px) rotateX(2deg)}
+.team-img{height:220px;overflow:hidden}
+.team-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.team-card:hover .team-img img{transform:scale(1.05)}
+.team-info{padding:1.25rem}
+.team-info h4{font-size:0.97rem;margin-bottom:3px}
+.team-info span{font-size:0.78rem;color:var(--accent)}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.val-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;transition:var(--tr)}
+.val-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-4px)}
+.val-icon{font-size:1.8rem;margin-bottom:10px}
+.val-card h4{font-size:0.95rem;margin-bottom:6px}
+.val-card p{font-size:0.83rem;color:var(--muted);line-height:1.7}
+
+/* BLOG LIST LAYOUT */
+.blog-list-layout{display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:start}
+.blog-list-cards{display:flex;flex-direction:column;gap:1.5rem}
+.blc{display:grid;grid-template-columns:260px 1fr;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:var(--tr)}
+.blc:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-3px)}
+.blc-img{height:100%;min-height:160px}
+.blc-img img{width:100%;height:100%;object-fit:cover}
+.blc-body{padding:1.5rem}
+.blc-body h3{font-size:1.05rem;margin-bottom:8px;line-height:1.35;font-weight:600}
+.blc-body p{font-size:0.83rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+.blog-sidebar{position:sticky;top:90px}
+
+/* MINI CARD */
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mini-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;transition:var(--tr)}
+.mini-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-3px)}
+.mini-icon{font-size:1.6rem;margin-bottom:8px}
+.mini-card h4{font-size:0.9rem;margin-bottom:4px}
+.mini-card p{font-size:0.8rem;color:var(--muted)}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border2),transparent);margin:2rem 0}
+
+/* DIGITAL MARKETING SPECIFIC */
+.dm-channels{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.dm-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;transition:var(--tr)}
+.dm-card:hover{border-color:rgba(14,165,233,0.2);transform:translateY(-4px) rotateX(2deg)}
+.dm-icon{font-size:1.8rem;margin-bottom:10px}
+.dm-card h4{font-size:0.97rem;margin-bottom:6px}
+.dm-card p{font-size:0.83rem;color:var(--muted);line-height:1.7}
+
+/* SCROLL TO TOP */
+#scrollTop{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:var(--accent);border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--bg);font-size:1.1rem;z-index:999;transition:var(--tr);box-shadow:0 4px 20px rgba(14,165,233,0.4)}
+#scrollTop:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(14,165,233,0.5)}
+#scrollTop.visible{display:flex}
+</style>
+</head>
+<body>
+
+<!-- READING PROGRESS BAR -->
+<div class="reading-bar" id="readingBar"></div>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- NAV -->
+<header class="nav-wrap">
+  <nav class="nav container">
+    <div class="logo" onclick="showPage('home')">Web<span>drix</span></div>
+    <div class="nav-menu">
+      <span class="nav-link" onclick="showPage('home')" id="nl-home">Home</span>
+      <span class="nav-link" onclick="showPage('about')" id="nl-about">About</span>
+      <div class="nav-drop">
+        <span class="nav-link" id="nl-services">Services ▾</span>
+        <div class="nav-drop-menu">
+          <div class="drop-item" onclick="showPage('service-web')"><span class="drop-icon">🌐</span>Web Development</div>
+          <div class="drop-item" onclick="showPage('service-seo')"><span class="drop-icon">🔍</span>SEO Services</div>
+          <div class="drop-item" onclick="showPage('service-email')"><span class="drop-icon">📧</span>Email Marketing</div>
+          <div class="drop-item" onclick="showPage('service-design')"><span class="drop-icon">🎨</span>Graphic Design</div>
+          <div class="drop-item" onclick="showPage('service-content')"><span class="drop-icon">✍️</span>Content Writing</div>
+          <div class="drop-item" onclick="showPage('service-dm')"><span class="drop-icon">📣</span>Digital Marketing</div>
+        </div>
+      </div>
+      <span class="nav-link" onclick="showPage('roi')" id="nl-roi">ROI Calculator</span>
+      <span class="nav-link" onclick="showPage('blog')" id="nl-blog">Blog</span>
+      <span class="nav-link" onclick="showPage('contact')" id="nl-contact">Contact</span>
+      <span class="btn btn-sm" onclick="showPage('contact')" style="margin-left:8px;cursor:pointer">Get a Quote</span>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
+<div class="page active" id="page-home">
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <!-- 3D floating element -->
+  <div class="hero-3d-wrap" aria-hidden="true">
+    <div class="hero-3d-card">
+      <div class="f-shape shape1"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=480&fit=crop" class="img-in-shape" alt=""/></div>
+      <div class="f-shape shape2"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=350&fit=crop" class="img-in-shape" alt=""/></div>
+      <div class="f-shape shape3"></div>
+      <div class="f-shape shape4"></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Digital Agency — Riyadh, KSA</div>
+      <h1 class="hero-title">We Build Digital<br/><span class="line2">Experiences That Convert</span></h1>
+      <p class="hero-desc">Webdrix is a full-service digital agency delivering world-class web development, SEO, email marketing, graphic design, content writing, and digital marketing solutions that grow businesses.</p>
+      <div class="hero-actions">
+        <span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Start Your Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span class="btn-ghost btn btn-lg" onclick="showPage('services')" style="cursor:pointer">Explore Services</span>
+      </div>
+      <div class="hero-stats">
+        <div class="h-stat"><span class="h-stat-n">300+</span><span class="h-stat-l">Projects</span></div>
+        <div class="h-stat"><span class="h-stat-n">98%</span><span class="h-stat-l">Satisfaction</span></div>
+        <div class="h-stat"><span class="h-stat-n">9+</span><span class="h-stat-l">Years</span></div>
+        <div class="h-stat"><span class="h-stat-n">40+</span><span class="h-stat-l">Team Members</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="section bg2">
+  <div class="container">
+    <div class="two-col">
+      <div class="img-card">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&h=500&fit=crop" alt="Webdrix Team"/>
+        <div class="img-badge"><strong>9+</strong><span>Years of Excellence</span></div>
+      </div>
+      <div>
+        <p class="tag">Who We Are</p>
+        <h2 class="h2" style="margin:16px 0">A Team of Passionate <span class="accent">Digital Craftsmen</span></h2>
+        <p class="lead" style="margin-bottom:1.5rem">At Webdrix, we blend strategy, creativity, and cutting-edge technology to build digital solutions that don't just look great — they perform. Since 2015, we've helped 300+ businesses build powerful online presences.</p>
+        <div class="feat-list">
+          <div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Strategy-First Approach</h4><p>Every project starts with deep research into your business, audience, and competitors.</p></div></div>
+          <div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Transparent Communication</h4><p>Real-time updates, clear milestones, and a dedicated account manager on every project.</p></div></div>
+          <div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Results-Driven Execution</h4><p>We measure success in revenue, rankings, and conversions — not just deliverables.</p></div></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:2rem">
+          <span class="btn" onclick="showPage('about')" style="cursor:pointer">Our Story</span>
+          <span class="btn-ghost btn" onclick="showPage('contact')" style="cursor:pointer">Work With Us</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="container">
+    <div class="sh center">
+      <p class="tag">What We Do</p>
+      <h2 class="h2" style="margin:16px 0">Full-Spectrum Digital <span class="accent">Services</span></h2>
+      <p class="lead">Everything your business needs to dominate online — expert teams, proven processes, measurable results.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card" onclick="showPage('service-web')"><div class="srv-num">01</div><div class="srv-icon-wrap">🌐</div><h3>Web Development</h3><p>High-performance websites using WordPress, Shopify, WooCommerce, Elementor Pro, HTML/CSS, Bootstrap, and Wix — built to convert.</p><span class="srv-arrow">→</span></div>
+      <div class="srv-card" onclick="showPage('service-seo')"><div class="srv-num">02</div><div class="srv-icon-wrap">🔍</div><h3>SEO Services</h3><p>Data-driven SEO that earns you page-one rankings, qualified organic traffic, and sustainable revenue growth.</p><span class="srv-arrow">→</span></div>
+      <div class="srv-card" onclick="showPage('service-email')"><div class="srv-num">03</div><div class="srv-icon-wrap">📧</div><h3>Email Marketing</h3><p>Smart campaigns and automation sequences that nurture leads, retain customers, and drive consistent revenue.</p><span class="srv-arrow">→</span></div>
+      <div class="srv-card" onclick="showPage('service-design')"><div class="srv-num">04</div><div class="srv-icon-wrap">🎨</div><h3>Graphic Design</h3><p>Brand identities, UI/UX design, social media graphics, and print materials that make your brand unforgettable.</p><span class="srv-arrow">→</span></div>
+      <div class="srv-card" onclick="showPage('service-content')"><div class="srv-num">05</div><div class="srv-icon-wrap">✍️</div><h3>Content Writing</h3><p>SEO-optimized, authoritative content that attracts the right audience, builds trust, and converts readers to customers.</p><span class="srv-arrow">→</span></div>
+      <div class="srv-card" onclick="showPage('service-dm')" style="background:linear-gradient(135deg,rgba(14,165,233,0.06),rgba(99,102,241,0.04));border-color:rgba(14,165,233,0.15)"><div class="srv-num">06</div><div class="srv-icon-wrap" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.3)">📣</div><h3>Digital Marketing</h3><p>Full-funnel digital marketing — PPC, social ads, conversion optimization, analytics, and growth strategy under one roof.</p><span class="srv-arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section bg2">
+  <div class="container">
+    <div class="sh-row">
+      <div><p class="tag">Our Work</p><h2 class="h2" style="margin-top:12px">Recent <span class="accent">Projects</span></h2></div>
+      <span class="btn-ghost btn" onclick="showPage('about')" style="cursor:pointer">View All Work</span>
+    </div>
+    <div class="portfolio-grid">
+      <div class="port-item c4 r2"><img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?w=600&h=500&fit=crop" class="port-img" alt=""/><div class="port-overlay"><div class="port-cat">E-Commerce</div><div class="port-title">NovaBoutique Shopify Store</div></div></div>
+      <div class="port-item c5"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=700&h=250&fit=crop" class="port-img" alt=""/><div class="port-overlay"><div class="port-cat">Web Development</div><div class="port-title">TechVault SaaS Landing Page</div></div></div>
+      <div class="port-item c3"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=250&fit=crop" class="port-img" alt=""/><div class="port-overlay"><div class="port-cat">Branding</div><div class="port-title">GreenLeaf Brand Identity</div></div></div>
+      <div class="port-item c4"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=600&h=250&fit=crop" class="port-img" alt=""/><div class="port-overlay"><div class="port-cat">SEO</div><div class="port-title">Meridian +340% Organic Traffic</div></div></div>
+      <div class="port-item c4"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&h=250&fit=crop" class="port-img" alt=""/><div class="port-overlay"><div class="port-cat">Digital Marketing</div><div class="port-title">SkyBrand PPC Campaign</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="container">
+    <div class="sh center">
+      <p class="tag">How We Work</p>
+      <h2 class="h2" style="margin:16px 0">Our <span class="accent">Proven Process</span></h2>
+      <p class="lead">A structured, transparent process that delivers on time, every time.</p>
+    </div>
+    <div class="process-grid" style="margin-top:3.5rem">
+      <div class="proc-step"><div class="proc-num">01</div><h4>Discovery</h4><p>Deep-dive into your goals, audience & competitive landscape</p></div>
+      <div class="proc-step"><div class="proc-num">02</div><h4>Strategy</h4><p>Custom roadmap with clear KPIs, milestones & deliverables</p></div>
+      <div class="proc-step"><div class="proc-num">03</div><h4>Design</h4><p>Pixel-perfect mockups reviewed and approved before build</p></div>
+      <div class="proc-step"><div class="proc-num">04</div><h4>Build & Launch</h4><p>Precision execution with rigorous QA and testing</p></div>
+      <div class="proc-step"><div class="proc-num">05</div><h4>Grow & Optimise</h4><p>Ongoing analysis, refinement & scaling of what works</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section bg2">
+  <div class="container">
+    <div class="sh center">
+      <p class="tag">Client Love</p>
+      <h2 class="h2" style="margin:16px 0">What Our <span class="accent">Clients Say</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-quote">"Webdrix completely transformed our online store. Sales increased 180% within 3 months of launching our new Shopify site. The team was incredibly professional throughout."</p><div class="testi-author"><div class="avatar-fallback" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">SM</div><div><strong>Sarah Mitchell</strong><span>CEO, NovaBoutique</span></div></div></div>
+      <div class="testi-card featured"><div class="stars">★★★★★</div><p class="testi-quote">"Their SEO team is exceptional. We went from page 5 to page 1 for our most competitive keywords in 4 months. The ROI has been incredible — every riyal spent came back multiplied."</p><div class="testi-author"><div class="avatar-fallback" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">JR</div><div><strong>James Rodriguez</strong><span>Marketing Director, TechVault</span></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><p class="testi-quote">"The email campaigns they built have a 42% open rate — far above industry average. Revenue attributed to email doubled in 60 days. Webdrix genuinely understands performance marketing."</p><div class="testi-author"><div class="avatar-fallback" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">AL</div><div><strong>Amara Lewis</strong><span>Founder, GreenLeaf Wellness</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-n">300+</span><span class="stat-l">Projects delivered across 15+ industries</span></div>
+      <div class="stat-card"><span class="stat-n">$48M+</span><span class="stat-l">Revenue generated for our clients</span></div>
+      <div class="stat-card"><span class="stat-n">97%</span><span class="stat-l">On-time project delivery rate</span></div>
+      <div class="stat-card"><span class="stat-n">4.9★</span><span class="stat-l">Average client satisfaction rating</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="section bg2">
+  <div class="container">
+    <div class="sh-row">
+      <div><p class="tag">Insights</p><h2 class="h2" style="margin-top:12px">From Our <span class="accent">Blog</span></h2></div>
+      <span class="btn-ghost btn" onclick="showPage('blog')" style="cursor:pointer">All Articles →</span>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blog-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=300&fit=crop" alt=""/><div class="blog-cat-pill">Web Development</div></div><div class="blog-body"><div class="blog-meta">March 5, 2025 · 8 min read</div><h3>10 Web Design Trends Dominating 2025</h3><p>Discover the cutting-edge design patterns redefining modern websites this year.</p><span class="read-more">Read Article →</span></div></div>
+      <div class="blog-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blog-img"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=600&h=300&fit=crop" alt=""/><div class="blog-cat-pill">SEO</div></div><div class="blog-body"><div class="blog-meta">Feb 20, 2025 · 6 min read</div><h3>The Ultimate SEO Checklist for New Websites</h3><p>Launch with a solid SEO foundation using this comprehensive guide.</p><span class="read-more">Read Article →</span></div></div>
+      <div class="blog-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blog-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop" alt=""/><div class="blog-cat-pill">Digital Marketing</div></div><div class="blog-body"><div class="blog-meta">Feb 10, 2025 · 5 min read</div><h3>How to Build a Winning Digital Marketing Funnel</h3><p>A proven framework for attracting, converting, and retaining customers online.</p><span class="read-more">Read Article →</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&h=500&fit=crop" class="cta-bg-img" alt=""/>
+  <div class="cta-gradient"></div>
+  <div class="container cta-content">
+    <p class="tag" style="justify-content:center;margin-bottom:16px">Ready to Grow?</p>
+    <h2 class="h2">Take Your Business to the <span class="accent">Next Level</span></h2>
+    <p class="lead" style="margin:16px auto 2.5rem">Get a free 30-minute strategy call. No pressure, no obligation — just expert advice on how to grow your digital presence.</p>
+    <div class="cta-btns">
+      <span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Free Consultation</span>
+      <span class="btn-ghost btn btn-lg" onclick="showPage('roi')" style="cursor:pointer">Try ROI Calculator</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo">Web<span>drix</span></span>
+        <p>Your trusted digital partner for web development, SEO, email marketing, graphic design, content writing, and digital marketing.</p>
+        <div class="socials">
+          <div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">f</div><div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Services</h5><ul>
+        <li><a onclick="showPage('service-web')">Web Development</a></li>
+        <li><a onclick="showPage('service-seo')">SEO Services</a></li>
+        <li><a onclick="showPage('service-email')">Email Marketing</a></li>
+        <li><a onclick="showPage('service-design')">Graphic Design</a></li>
+        <li><a onclick="showPage('service-content')">Content Writing</a></li>
+        <li><a onclick="showPage('service-dm')">Digital Marketing</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Company</h5><ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('blog')">Blog</a></li>
+        <li><a onclick="showPage('roi')">ROI Calculator</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Legal</h5><ul>
+        <li><a>Privacy Policy</a></li>
+        <li><a>Terms of Service</a></li>
+        <li><a>Cookie Policy</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact Us</h5>
+        <div class="footer-contact-item"><span>📧</span><a href="mailto:info@webdrix.com">info@webdrix.com</a></div>
+        <div class="footer-contact-item"><span>📞</span><a href="tel:+966511794304">+966 51 179 4304</a></div>
+        <div class="footer-contact-item"><span>📍</span><span>Riyadh, Saudi Arabia</span></div>
+        <div class="footer-contact-item"><span>🕐</span><span>Sun–Thu: 9AM – 6PM AST</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Webdrix. All rights reserved.</p>
+      <a>Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- END HOME -->
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<div class="page" id="page-about">
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-hero-glow"></div></div>
+  <div class="container page-hero-inner">
+    <div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>About Us</div>
+    <p class="tag">Our Story</p>
+    <h1 style="margin:16px 0">We're a Team of <span class="accent">Digital Innovators</span></h1>
+    <p class="page-hero-desc">Passionate, results-driven, and committed to building digital experiences that make a lasting impact for businesses across Saudi Arabia and beyond.</p>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <p class="tag">How It Started</p>
+        <h2 class="h2" style="margin:16px 0">From a Small Studio to a <span class="accent">Regional Leader</span></h2>
+        <p class="lead" style="margin-bottom:1.25rem">Webdrix was founded in 2015 by a group of designers and developers who believed businesses in the Middle East deserved world-class digital services.</p>
+        <p style="font-size:0.9rem;color:var(--muted);line-height:1.8;margin-bottom:1rem">What started as a two-person web studio in Riyadh quickly grew into a full-service digital agency with 40+ specialists. Today, we serve clients across Saudi Arabia, the UAE, Qatar, and internationally — delivering over 300 successful digital projects.</p>
+        <p style="font-size:0.9rem;color:var(--muted);line-height:1.8;margin-bottom:2rem">Our success is built on one simple principle: we treat every client's business as if it were our own. That means going beyond deliverables to focus on real business outcomes.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><div class="mini-icon">🏆</div><h4>Award-Winning</h4><p>Recognised for design & marketing excellence</p></div>
+          <div class="mini-card"><div class="mini-icon">🌍</div><h4>15+ Industries</h4><p>E-com, healthcare, tech, finance & more</p></div>
+          <div class="mini-card"><div class="mini-icon">👥</div><h4>40+ Specialists</h4><p>Designers, devs, writers & marketers</p></div>
+          <div class="mini-card"><div class="mini-icon">🤝</div><h4>85% Retention</h4><p>Of clients return for additional projects</p></div>
+        </div>
+      </div>
+      <div class="img-card">
+        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=700&h=580&fit=crop" alt="Webdrix Office"/>
+        <div class="img-badge"><strong>300+</strong><span>Projects Delivered</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card"><span class="stat-n">300+</span><span class="stat-l">Projects Delivered</span></div>
+      <div class="stat-card"><span class="stat-n">40+</span><span class="stat-l">Team Members</span></div>
+      <div class="stat-card"><span class="stat-n">9+</span><span class="stat-l">Years in Business</span></div>
+      <div class="stat-card"><span class="stat-n">15+</span><span class="stat-l">Industries Served</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="sh center"><p class="tag">The People</p><h2 class="h2" style="margin:16px 0">Meet Our <span class="accent">Expert Team</span></h2></div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=250&fit=crop&crop=face" alt="CEO"/></div><div class="team-info"><h4>Daniel Carter</h4><span>Founder & CEO</span></div></div>
+      <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=250&fit=crop&crop=face" alt="Dev Lead"/></div><div class="team-info"><h4>Priya Sharma</h4><span>Lead Developer</span></div></div>
+      <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=250&fit=crop&crop=face" alt="Creative"/></div><div class="team-info"><h4>Marcus Allen</h4><span>Creative Director</span></div></div>
+      <div class="team-card"><div class="team-img"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=250&fit=crop&crop=face" alt="SEO"/></div><div class="team-info"><h4>Leila Hassan</h4><span>SEO Strategist</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sh center"><p class="tag">What We Stand For</p><h2 class="h2" style="margin:16px 0">Our Core <span class="accent">Values</span></h2></div>
+    <div class="values-grid">
+      <div class="val-card"><div class="val-icon">💎</div><h4>Excellence</h4><p>We never settle for good enough. Every project is built to the highest possible standard.</p></div>
+      <div class="val-card"><div class="val-icon">🔍</div><h4>Transparency</h4><p>Honest communication, clear reporting, and no hidden fees — ever. You always know what's happening.</p></div>
+      <div class="val-card"><div class="val-icon">🚀</div><h4>Innovation</h4><p>We embrace emerging technologies to keep our clients ahead of the competition.</p></div>
+      <div class="val-card"><div class="val-icon">🤝</div><h4>Partnership</h4><p>We're invested in your long-term success. Your growth is our growth.</p></div>
+      <div class="val-card"><div class="val-icon">⚡</div><h4>Efficiency</h4><p>Streamlined processes mean faster delivery without ever cutting corners on quality.</p></div>
+      <div class="val-card"><div class="val-icon">📊</div><h4>Data-Driven</h4><p>Every strategy is guided by data and measurable business outcomes — not guesswork.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&h=500&fit=crop" class="cta-bg-img" alt=""/><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Ready to Work With a Team That <span class="accent">Delivers?</span></h2><p class="lead" style="margin:16px auto 2.5rem">Let's talk about your goals and build something extraordinary together.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Free Consultation</span><span class="btn-ghost btn btn-lg" onclick="showPage('services')" style="cursor:pointer">Our Services →</span></div></div></section>
+
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p><div class="socials"><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">f</div></div></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-seo')">SEO Services</a></li><li><a onclick="showPage('service-dm')">Digital Marketing</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a onclick="showPage('about')">About</a></li><li><a onclick="showPage('blog')">Blog</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix. All rights reserved.</p></div></div></footer>
+</div>
+<!-- END ABOUT -->
+
+<!-- ═══ SERVICE: WEB DEV ═══ -->
+<div class="page" id="page-service-web">
+<section class="page-hero">
+  <div class="page-hero-bg"><div class="page-hero-glow"></div></div>
+  <div class="container page-hero-inner">
+    <div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span><a onclick="showPage('services')">Services</a><span class="sep">›</span>Web Development</div>
+    <p class="tag">🌐 Web Development</p>
+    <h1 style="margin:16px 0">Custom Websites That <span class="accent">Perform & Convert</span></h1>
+    <p class="page-hero-desc">From sleek landing pages to complex e-commerce platforms — we build websites that look stunning, load fast, and turn visitors into paying customers.</p>
+    <div class="page-hero-stats">
+      <div class="ph-stat"><strong>180+</strong><span>Websites Launched</span></div>
+      <div class="ph-stat"><strong>97%</strong><span>On-Time Delivery</span></div>
+      <div class="ph-stat"><strong>90+</strong><span>Avg PageSpeed Score</span></div>
+      <div class="ph-stat"><strong>8</strong><span>Platforms Mastered</span></div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:2rem"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Free Quote</span><span class="btn-ghost btn btn-lg">How We Work ↓</span></div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <p class="tag">What We Build</p>
+        <h2 class="h2" style="margin:16px 0">End-to-End Web Development <span class="accent">Solutions</span></h2>
+        <p class="lead" style="margin-bottom:1.25rem">Whether you need a portfolio, a high-converting landing page, or a fully-featured e-commerce store — our developers build it with precision and purpose.</p>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem">We specialize in WordPress, Shopify, WooCommerce, Elementor Pro, HTML/CSS, Bootstrap, Bootstrap Studio, and Wix — choosing the right platform for your business needs and budget.</p>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem">
+          <h4 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:1rem">Types of Sites We Build</h4>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">Corporate & Business Websites</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">E-Commerce Stores (WooCommerce, Shopify)</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">Landing Pages & Sales Funnels</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">Portfolio & Creative Websites</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">Membership & Subscription Platforms</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:6px 0"><span style="color:var(--accent3);font-weight:700">✓</span><span style="font-size:0.88rem">Custom Web Applications & Portals</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="img-card">
+        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=700&h=500&fit=crop" alt="Web Development"/>
+        <div class="img-badge"><strong>90+</strong><span>PageSpeed Score</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sh center"><p class="tag">Platform Expertise</p><h2 class="h2" style="margin:16px 0">We Go Deep on <span class="accent">Every Platform</span></h2><p class="lead">Not generalists who dabble — genuine experts in each platform we offer.</p></div>
+    <div class="tool-grid" style="margin-top:2.5rem">
+      <div class="tool-card"><div class="tool-icon">🔧</div><div><div class="tool-badge">Most Popular</div><h4>WordPress + Elementor Pro</h4><p>Our most-requested stack. WordPress powers 43%+ of the web. Paired with Elementor Pro, we build visually stunning, fully customizable sites with developer-grade power. Custom post types, ACF, WooCommerce, REST API, plugin development.</p><div class="tool-tags"><span class="t-tag">Custom Themes</span><span class="t-tag">ACF Integration</span><span class="t-tag">WooCommerce</span><span class="t-tag">Multisite</span><span class="t-tag">Plugin Dev</span></div></div></div>
+      <div class="tool-card"><div class="tool-icon">🛒</div><div><div class="tool-badge">Best for E-Commerce</div><h4>Shopify</h4><p>The gold standard for scalable e-commerce. We build custom Shopify themes from scratch using Liquid, integrate third-party apps, and set up everything from abandoned cart recovery to multi-currency checkout flows.</p><div class="tool-tags"><span class="t-tag">Liquid Templates</span><span class="t-tag">App Integration</span><span class="t-tag">Shopify Plus</span><span class="t-tag">Multi-Currency</span></div></div></div>
+      <div class="tool-card"><div class="tool-icon">🏪</div><div><div class="tool-badge">WordPress Stores</div><h4>WooCommerce</h4><p>Full WordPress power with robust e-commerce functionality. Complete stores with custom product pages, inventory management, subscription billing, wholesale pricing, and payment gateway integrations.</p><div class="tool-tags"><span class="t-tag">Payment Gateways</span><span class="t-tag">Subscriptions</span><span class="t-tag">Wholesale</span><span class="t-tag">Inventory Sync</span></div></div></div>
+      <div class="tool-card"><div class="tool-icon">💻</div><div><div class="tool-badge">Maximum Performance</div><h4>HTML / CSS / Bootstrap / Bootstrap Studio</h4><p>For maximum speed, full design control, and zero bloat. Clean semantic HTML5, modern CSS3, Bootstrap 5 — with 99+ PageSpeed scores achievable. Perfect for performance-critical applications.</p><div class="tool-tags"><span class="t-tag">Semantic HTML5</span><span class="t-tag">CSS Grid</span><span class="t-tag">Bootstrap 5</span><span class="t-tag">99+ PageSpeed</span></div></div></div>
+      <div class="tool-card"><div class="tool-icon">🌀</div><div><div class="tool-badge">Easy Self-Management</div><h4>Wix</h4><p>Perfect for businesses that want a beautiful site they can update themselves. We go far beyond standard templates — custom sections, advanced Velo by Wix functionality, true design originality.</p><div class="tool-tags"><span class="t-tag">Custom Design</span><span class="t-tag">Velo by Wix</span><span class="t-tag">Wix Stores</span><span class="t-tag">Dynamic Pages</span></div></div></div>
+      <div class="tool-card"><div class="tool-icon">⚡</div><div><div class="tool-badge">Visual Page Building</div><h4>Elementor Pro</h4><p>Our secret weapon for rapid, high-quality WordPress design. We craft pixel-perfect layouts, custom headers/footers, popup builders, dynamic content, and deeply customized templates.</p><div class="tool-tags"><span class="t-tag">Theme Builder</span><span class="t-tag">Popup Builder</span><span class="t-tag">Dynamic Content</span><span class="t-tag">Global Styles</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="sh center"><p class="tag">What's Included</p><h2 class="h2" style="margin:16px 0">Built Into <span class="accent">Every Project</span></h2><p class="lead">These aren't optional extras — they're standard on every website we deliver.</p></div>
+    <div class="benefits-grid" style="margin-top:2.5rem">
+      <div class="benefit-card"><div class="ben-icon">📱</div><h4>100% Mobile Responsive</h4><p>Designed mobile-first, tested on 15+ screen sizes and real devices. No pinching or zooming.</p></div>
+      <div class="benefit-card"><div class="ben-icon">⚡</div><h4>Lightning Fast Performance</h4><p>Optimized images, minified assets, lazy loading, and CDN caching to hit 90+ Google PageSpeed scores.</p></div>
+      <div class="benefit-card"><div class="ben-icon">🔍</div><h4>SEO-Ready Architecture</h4><p>Clean semantic HTML, heading hierarchy, schema markup, XML sitemaps, and optimized meta tags from day one.</p></div>
+      <div class="benefit-card"><div class="ben-icon">🔒</div><h4>Enterprise Security</h4><p>SSL, WAF protection, security hardening, automated backups, and uptime monitoring on every project.</p></div>
+      <div class="benefit-card"><div class="ben-icon">🎯</div><h4>Conversion-Optimized</h4><p>Strategic CTAs, optimized user flows, trust signals, and lead capture forms on every page.</p></div>
+      <div class="benefit-card"><div class="ben-icon">🛠️</div><h4>Easy to Manage</h4><p>Full CMS training session plus written documentation so your team can update content confidently.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sh center"><p class="tag">Real Results</p><h2 class="h2" style="margin:16px 0">Web Development <span class="accent">Case Studies</span></h2></div>
+    <div class="results-grid" style="margin-top:2.5rem">
+      <div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#0f172a,#1e40af)">🛍️</div><div><h4>NovaBoutique E-Commerce</h4><span>Shopify Custom Theme + WooCommerce</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>+180%</strong><span>Revenue increase</span></div><div class="rc-stat"><strong>2.1s</strong><span>Load time</span></div><div class="rc-stat"><strong>8.4%</strong><span>Conv. rate</span></div><div class="rc-stat"><strong>96</strong><span>PageSpeed</span></div></div><p class="rc-quote">"Our new Shopify site completely transformed our business. Sales more than doubled in the first quarter." — Sarah M., CEO</p></div>
+      <div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#134e4a,#0d9488)">🏢</div><div><h4>Meridian Consulting</h4><span>WordPress + Elementor Pro</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>+95%</strong><span>Organic traffic</span></div><div class="rc-stat"><strong>3×</strong><span>Lead generation</span></div><div class="rc-stat"><strong>−68%</strong><span>Bounce rate</span></div><div class="rc-stat"><strong>91</strong><span>PageSpeed</span></div></div><p class="rc-quote">"We finally have a site that reflects our quality. Leads tripled and our sales team is busier than ever." — David K.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="sh center"><p class="tag">Our Workflow</p><h2 class="h2" style="margin:16px 0">Our 6-Step Development <span class="accent">Process</span></h2></div>
+    <div class="steps-list" style="margin-top:2.5rem;max-width:860px;margin-left:auto;margin-right:auto">
+      <div class="step-item"><div class="step-circle">01</div><div><h4>Discovery & Requirements Gathering</h4><p>Structured deep-dive into your business goals, target audience, competitor landscape, brand guidelines, and technical requirements. This becomes the detailed project brief guiding every decision.</p></div></div>
+      <div class="step-item"><div class="step-circle">02</div><div><h4>Information Architecture & Wireframing</h4><p>We map the site structure, navigation, and user flows as wireframes. This ensures conversion paths are clear before a single design pixel is placed.</p></div></div>
+      <div class="step-item"><div class="step-circle">03</div><div><h4>High-Fidelity Visual Design</h4><p>Our designers craft pixel-perfect mockups in Figma, aligned with your brand. You review and sign off on every key page before development begins.</p></div></div>
+      <div class="step-item"><div class="step-circle">04</div><div><h4>Development, CMS & Integrations</h4><p>We build with clean, well-commented code. All integrations — CRMs, payment gateways, email tools, booking systems — are fully configured and tested.</p></div></div>
+      <div class="step-item"><div class="step-circle">05</div><div><h4>QA Testing & Performance Optimization</h4><p>Rigorous cross-browser testing, form verification, speed optimization, and a full SEO technical audit. We don't sign off until everything meets our standards.</p></div></div>
+      <div class="step-item"><div class="step-circle">06</div><div><h4>Launch, Training & Ongoing Support</h4><p>We handle live deployment, set up GA4 and Search Console, and deliver a CMS training session with documentation. Post-launch support is included.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">Web Development <span class="accent">Pricing</span></h2><p class="lead">Transparent, fixed-price packages. No hidden fees.</p></div>
+    <div class="pricing-grid" style="margin-top:2.5rem">
+      <div class="p-card"><p class="p-name">Starter</p><div class="p-price">$1,200<sub> starting</sub></div><p class="p-desc">Perfect for small businesses needing a professional online presence fast.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Up to 5 pages</li><li class="p-feat"><span class="ck">✓</span>WordPress or Wix</li><li class="p-feat"><span class="ck">✓</span>Mobile responsive design</li><li class="p-feat"><span class="ck">✓</span>Contact form integration</li><li class="p-feat"><span class="ck">✓</span>Basic SEO setup</li><li class="p-feat"><span class="ck">✓</span>SSL & security</li><li class="p-feat"><span class="cx">✗</span>E-commerce functionality</li><li class="p-feat"><span class="cx">✗</span>Custom animations</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div>
+      <div class="p-card popular"><div class="pop-badge">★ Most Popular</div><p class="p-name">Professional</p><div class="p-price">$3,500<sub> starting</sub></div><p class="p-desc">Our flagship package for growing businesses needing a high-performance, conversion-focused website.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Up to 12 pages</li><li class="p-feat"><span class="ck">✓</span>WordPress + Elementor Pro</li><li class="p-feat"><span class="ck">✓</span>Fully custom design</li><li class="p-feat"><span class="ck">✓</span>Full on-page SEO setup</li><li class="p-feat"><span class="ck">✓</span>Lead capture + CRM integration</li><li class="p-feat"><span class="ck">✓</span>GA4 + conversion tracking</li><li class="p-feat"><span class="ck">✓</span>Basic WooCommerce (optional)</li><li class="p-feat"><span class="ck">✓</span>30-day post-launch support</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div>
+      <div class="p-card"><p class="p-name">E-Commerce / Enterprise</p><div class="p-price">$6,500<sub>+ starting</sub></div><p class="p-desc">Full-featured e-commerce stores and enterprise websites with advanced functionality.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Unlimited pages</li><li class="p-feat"><span class="ck">✓</span>Shopify or WooCommerce</li><li class="p-feat"><span class="ck">✓</span>Full custom design system</li><li class="p-feat"><span class="ck">✓</span>Payment gateway integration</li><li class="p-feat"><span class="ck">✓</span>Advanced SEO + schema</li><li class="p-feat"><span class="ck">✓</span>API integrations</li><li class="p-feat"><span class="ck">✓</span>Unlimited revisions</li><li class="p-feat"><span class="ck">✓</span>60-day post-launch support</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Custom Quote</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="sh center"><p class="tag">Got Questions?</p><h2 class="h2" style="margin:16px 0">Web Development <span class="accent">FAQs</span></h2></div>
+    <div class="faq-list" style="margin-top:2.5rem;max-width:800px;margin-left:auto;margin-right:auto">
+      <div class="faq-item"><button class="faq-q">How long does a website project take?<span class="faq-icon">+</span></button><div class="faq-a"><p>Timelines vary by scope. A 5-page starter site takes 2–3 weeks. A professional 10–15 page WordPress site runs 4–6 weeks. A full e-commerce store with custom functionality generally takes 6–10 weeks. We provide an accurate timeline during your discovery call and always deliver on schedule.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Which platform do you recommend?<span class="faq-icon">+</span></button><div class="faq-a"><p>It depends on your needs. WordPress + Elementor Pro is our recommendation for most businesses — flexible, powerful, and scalable. Shopify is our pick for high-volume e-commerce. Wix is best when ease of self-management is the priority. We'll recommend the right platform during the discovery call.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Can I update the website myself after launch?<span class="faq-icon">+</span></button><div class="faq-a"><p>Absolutely. Every site includes a live CMS training session and written documentation. Adding blog posts, updating products, changing images, editing text — all doable without a developer. And if you get stuck, we're just an email away.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Do you offer website hosting and maintenance?<span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. We offer managed WordPress hosting from $49/month — includes daily backups, security monitoring, plugin updates, and uptime monitoring. We can also set you up with the best host for your platform if you prefer to manage it yourself.</p></div></div>
+      <div class="faq-item"><button class="faq-q">What's your payment structure?<span class="faq-icon">+</span></button><div class="faq-a"><p>We require a 50% deposit to begin work, with the remaining 50% due upon project completion before launch. For larger projects over $10,000, we offer milestone-based payment schedules. We accept bank transfer, credit card, and PayPal.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Ready for a Website That <span class="accent">Works as Hard as You Do?</span></h2><p class="lead" style="margin:16px auto 2.5rem">Get a free consultation and detailed custom quote. No pressure, no obligation.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Request Free Quote</span><span class="btn-ghost btn btn-lg" onclick="showPage('services')" style="cursor:pointer">All Services</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-seo')">SEO Services</a></li><li><a onclick="showPage('service-dm')">Digital Marketing</a></li></ul></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICE: SEO ═══ -->
+<div class="page" id="page-service-seo">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span><a onclick="showPage('services')">Services</a><span class="sep">›</span>SEO Services</div><p class="tag">🔍 SEO Services</p><h1 style="margin:16px 0">Dominate Search with <span class="accent">Proven SEO Strategies</span></h1><p class="page-hero-desc">We drive qualified organic traffic that converts into real customers — and measurable revenue you can see in your bottom line.</p><div class="page-hero-stats"><div class="ph-stat"><strong>340%</strong><span>Avg Traffic Increase</span></div><div class="ph-stat"><strong>4.2×</strong><span>Avg ROI</span></div><div class="ph-stat"><strong>120+</strong><span>SEO Clients</span></div></div><div style="margin-top:2rem;display:flex;gap:12px"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Free SEO Audit</span><span class="btn-ghost btn btn-lg" onclick="showPage('roi')" style="cursor:pointer">Calculate ROI</span></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="two-col"><div><p class="tag">The Opportunity</p><h2 class="h2" style="margin:16px 0">SEO Is Still the Highest <span class="accent">ROI Digital Channel</span></h2><p class="lead" style="margin-bottom:1.25rem">While paid ads stop the moment you stop paying, SEO compounds over time. A well-executed SEO strategy builds an asset that generates qualified traffic 24/7, 365 days a year.</p><p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">Our clients see an average of 340% increase in organic traffic within 6 months and a 4.2× return on their SEO investment. We achieve this through a combination of technical excellence, content strategy, and authoritative link acquisition.</p><div class="feat-list"><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Long-term, compounding results</h4><p>Unlike paid ads, SEO equity grows over time and builds sustainable traffic.</p></div></div><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Qualified, intent-driven traffic</h4><p>Organic visitors are actively searching for what you offer — they convert better.</p></div></div><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Transparent, jargon-free reporting</h4><p>Monthly reports show exactly where your rankings, traffic, and conversions stand.</p></div></div></div></div><div class="img-card"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=700&h=500&fit=crop" alt="SEO Results"/><div class="img-badge"><strong>4.2×</strong><span>Average SEO ROI</span></div></div></div></div></section>
+
+<section class="section"><div class="container"><div class="sh center"><p class="tag">What's Included</p><h2 class="h2" style="margin:16px 0">Full-Spectrum <span class="accent">SEO Services</span></h2></div><div class="benefits-grid" style="margin-top:2.5rem"><div class="benefit-card"><div class="ben-icon">🔧</div><h4>Technical SEO</h4><p>Site speed, Core Web Vitals, crawlability, schema markup, structured data, canonical tags, and all technical foundations that search engines require.</p></div><div class="benefit-card"><div class="ben-icon">📄</div><h4>On-Page Optimization</h4><p>Title tags, meta descriptions, heading hierarchy, internal linking strategy, content quality scoring, and keyword integration done right.</p></div><div class="benefit-card"><div class="ben-icon">🔗</div><h4>Link Building</h4><p>High-authority backlinks through white-hat outreach, digital PR, guest posting, and strategic content partnerships. Zero spammy tactics.</p></div><div class="benefit-card"><div class="ben-icon">🔑</div><h4>Keyword Research & Strategy</h4><p>Deep keyword analysis targeting high-value, high-intent terms your ideal customers are actually searching for — mapped to your content strategy.</p></div><div class="benefit-card"><div class="ben-icon">📍</div><h4>Local SEO</h4><p>Google Business Profile optimization, local citation building, review strategy, and local content to dominate your geographic market.</p></div><div class="benefit-card"><div class="ben-icon">📊</div><h4>Monthly Reporting & Analytics</h4><p>Clear reports on ranking movements, traffic trends, conversion data, and ROI — with insights in plain English, not SEO jargon.</p></div></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Our Toolkit</p><h2 class="h2" style="margin:16px 0">SEO Tools & <span class="accent">Technology</span></h2></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem"><div class="mini-card"><div class="mini-icon">🔍</div><h4>Ahrefs</h4><p>Backlink analysis & competitor research</p></div><div class="mini-card"><div class="mini-icon">📊</div><h4>SEMrush</h4><p>Rank tracking & keyword discovery</p></div><div class="mini-card"><div class="mini-icon">🔧</div><h4>Screaming Frog</h4><p>Technical audits & crawl analysis</p></div><div class="mini-card"><div class="mini-icon">📈</div><h4>Google Analytics 4</h4><p>Traffic & conversion measurement</p></div><div class="mini-card"><div class="mini-icon">🌐</div><h4>Google Search Console</h4><p>Search performance & indexing</p></div><div class="mini-card"><div class="mini-icon">⚡</div><h4>PageSpeed Insights</h4><p>Core Web Vitals optimization</p></div><div class="mini-card"><div class="mini-icon">🗺️</div><h4>BrightLocal</h4><p>Local SEO & citation management</p></div><div class="mini-card"><div class="mini-icon">✍️</div><h4>Surfer SEO</h4><p>AI-powered content optimization</p></div></div></div></section>
+
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Real Results</p><h2 class="h2" style="margin:16px 0">SEO <span class="accent">Case Studies</span></h2></div><div class="results-grid" style="margin-top:2.5rem"><div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#134e4a,#0d9488)">🏥</div><div><h4>MedPoint Healthcare</h4><span>Healthcare · Local SEO + Content</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>+420%</strong><span>Organic traffic</span></div><div class="rc-stat"><strong>#1</strong><span>Local rankings</span></div><div class="rc-stat"><strong>+280%</strong><span>Appointment bookings</span></div><div class="rc-stat"><strong>6mo</strong><span>To results</span></div></div><p class="rc-quote">"We dominate local search now. Our appointment bookings tripled and our paid ad spend dropped by 40%." — Dr. Ahmed K.</p></div><div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#581c87,#9333ea)">💼</div><div><h4>TechVault SaaS</h4><span>B2B Tech · Full SEO Campaign</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>+340%</strong><span>Organic traffic</span></div><div class="rc-stat"><strong>47</strong><span>Page 1 keywords</span></div><div class="rc-stat"><strong>−52%</strong><span>Cost per lead</span></div><div class="rc-stat"><strong>4.8×</strong><span>ROI</span></div></div><p class="rc-quote">"The SEO results were beyond what we expected. We're now getting more qualified leads from organic than from our entire PPC budget." — James R.</p></div></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">SEO Retainer <span class="accent">Pricing</span></h2><p class="lead">Monthly retainers — because SEO is a marathon, not a sprint.</p></div><div class="pricing-grid" style="margin-top:2.5rem"><div class="p-card"><p class="p-name">Growth</p><div class="p-price">$800<sub>/mo</sub></div><p class="p-desc">For small businesses and local brands building their organic presence.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Technical SEO audit & fixes</li><li class="p-feat"><span class="ck">✓</span>Up to 20 target keywords</li><li class="p-feat"><span class="ck">✓</span>2 blog posts/month</li><li class="p-feat"><span class="ck">✓</span>Local SEO optimization</li><li class="p-feat"><span class="ck">✓</span>Monthly ranking report</li><li class="p-feat"><span class="cx">✗</span>Link building campaigns</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card popular"><div class="pop-badge">★ Best Value</div><p class="p-name">Authority</p><div class="p-price">$1,800<sub>/mo</sub></div><p class="p-desc">For competitive markets requiring aggressive ranking strategies.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Everything in Growth</li><li class="p-feat"><span class="ck">✓</span>Up to 60 target keywords</li><li class="p-feat"><span class="ck">✓</span>4 blog posts + 2 landing pages</li><li class="p-feat"><span class="ck">✓</span>Active link building (8 links/mo)</li><li class="p-feat"><span class="ck">✓</span>Competitor gap analysis</li><li class="p-feat"><span class="ck">✓</span>Quarterly strategy review</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card"><p class="p-name">Dominator</p><div class="p-price">$3,500<sub>/mo</sub></div><p class="p-desc">Enterprise-level SEO for brands that want to own their niche.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Everything in Authority</li><li class="p-feat"><span class="ck">✓</span>Unlimited target keywords</li><li class="p-feat"><span class="ck">✓</span>8 blog posts + 4 landing pages</li><li class="p-feat"><span class="ck">✓</span>20+ premium links/month</li><li class="p-feat"><span class="ck">✓</span>Digital PR campaigns</li><li class="p-feat"><span class="ck">✓</span>Dedicated SEO director</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Custom Quote</span></div></div></div></section>
+
+<section class="section"><div class="container"><div class="sh center"><p class="tag">FAQs</p><h2 class="h2" style="margin:16px 0">SEO <span class="accent">Questions Answered</span></h2></div><div class="faq-list" style="margin-top:2.5rem;max-width:800px;margin-left:auto;margin-right:auto"><div class="faq-item"><button class="faq-q">How long before I see SEO results?<span class="faq-icon">+</span></button><div class="faq-a"><p>Honest answer: 3–6 months for meaningful movement, 6–12 months for substantial results. SEO is a long-term investment. Our clients typically see ranking improvements in month 3, significant traffic in month 5–6, and full ROI within 12 months. We don't promise overnight results — we promise lasting ones.</p></div></div><div class="faq-item"><button class="faq-q">Will you guarantee first-page rankings?<span class="faq-icon">+</span></button><div class="faq-a"><p>No agency can ethically guarantee specific rankings — Google controls the algorithm. What we do guarantee is best-practice execution, transparent reporting, and a track record of delivering page-one rankings for our clients. Our case studies speak for themselves.</p></div></div><div class="faq-item"><button class="faq-q">Do I need SEO if I'm already running paid ads?<span class="faq-icon">+</span></button><div class="faq-a"><p>Absolutely. Paid ads stop the moment you stop paying. SEO builds a compounding asset. Our most successful clients use both — PPC for immediate results and SEO for long-term, lower-cost organic traffic. Together they significantly reduce your average cost per acquisition.</p></div></div><div class="faq-item"><button class="faq-q">Do you do black-hat SEO?<span class="faq-icon">+</span></button><div class="faq-a"><p>Never. We use 100% white-hat, Google-compliant techniques. Black-hat tactics can produce short-term gains followed by devastating penalties that can take years to recover from. All our link building is outreach-based, and all our content is original and high-quality.</p></div></div></div></div></section>
+
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Ready to Rank Higher and <span class="accent">Drive More Traffic?</span></h2><p class="lead" style="margin:16px auto 2.5rem">Get a free SEO audit worth $500 — we'll show exactly what's holding your site back.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Free SEO Audit</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-seo')">SEO Services</a></li><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-dm')">Digital Marketing</a></li></ul></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICE: EMAIL ═══ -->
+<div class="page" id="page-service-email">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Email Marketing</div><p class="tag">📧 Email Marketing</p><h1 style="margin:16px 0">Email That <span class="accent">Nurtures, Converts & Retains</span></h1><p class="page-hero-desc">Email delivers an average $42 ROI for every $1 spent. We help you capture every dollar of that potential with strategic campaigns and intelligent automation.</p><div class="page-hero-stats"><div class="ph-stat"><strong>42%</strong><span>Avg Open Rate</span></div><div class="ph-stat"><strong>$42</strong><span>ROI Per $1 Spent</span></div><div class="ph-stat"><strong>2×</strong><span>Revenue in 60 Days</span></div></div><div style="margin-top:2rem"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Start Your Campaign</span></div></div></section>
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">What We Deliver</p><h2 class="h2" style="margin:16px 0">Complete Email Marketing <span class="accent">Solutions</span></h2></div><div class="benefits-grid" style="margin-top:2.5rem"><div class="benefit-card"><div class="ben-icon">🤖</div><h4>Marketing Automation</h4><p>Sophisticated sequences that run 24/7 — welcoming subscribers, nurturing leads, recovering carts, re-engaging dormant contacts, and triggering campaigns based on user behaviour.</p></div><div class="benefit-card"><div class="ben-icon">📰</div><h4>Newsletter Campaigns</h4><p>Beautifully designed, strategically written newsletters that keep your audience engaged, build brand loyalty, and drive consistent traffic and sales month after month.</p></div><div class="benefit-card"><div class="ben-icon">🎯</div><h4>Advanced Segmentation</h4><p>Right message, right person, right time. We build sophisticated segmentation strategies based on behaviour, purchase history, engagement level, and demographic data.</p></div><div class="benefit-card"><div class="ben-icon">🧪</div><h4>A/B Testing</h4><p>Systematic testing of subject lines, send times, content, CTAs, and layouts to continuously optimize every element of your campaigns for maximum performance.</p></div><div class="benefit-card"><div class="ben-icon">🎨</div><h4>Email Design & Copywriting</h4><p>Beautiful, mobile-responsive email templates with compelling copywriting that drives action. Every email is on-brand and conversion-optimized.</p></div><div class="benefit-card"><div class="ben-icon">📊</div><h4>Analytics & Revenue Attribution</h4><p>Detailed reports on opens, clicks, conversions, and revenue directly attributed to email — so you know exactly what's working and what the ROI is.</p></div></div></div></section>
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Platform Expertise</p><h2 class="h2" style="margin:16px 0">We Work With Your <span class="accent">Existing Platform</span></h2></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem"><div class="mini-card"><div class="mini-icon">📧</div><h4>Mailchimp</h4><p>Best for small-medium businesses getting started with email automation.</p></div><div class="mini-card"><div class="mini-icon">🛍️</div><h4>Klaviyo</h4><p>Our go-to for e-commerce — powerful segmentation and revenue analytics.</p></div><div class="mini-card"><div class="mini-icon">⚡</div><h4>ActiveCampaign</h4><p>Powerful B2B automation with CRM integration and lead scoring.</p></div><div class="mini-card"><div class="mini-icon">📬</div><h4>ConvertKit</h4><p>Perfect for creators, coaches, and course sellers growing audiences.</p></div><div class="mini-card"><div class="mini-icon">🏢</div><h4>HubSpot</h4><p>Enterprise-grade email integrated with full CRM and marketing suite.</p></div><div class="mini-card"><div class="mini-icon">📲</div><h4>Brevo (Sendinblue)</h4><p>Great for transactional emails and SMS marketing alongside campaigns.</p></div></div></div></section>
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Automation Flows</p><h2 class="h2" style="margin:16px 0">Automation Sequences We <span class="accent">Build For You</span></h2></div><div class="del-grid" style="margin-top:2.5rem"><div class="del-card"><div class="del-icon">👋</div><div class="del-body"><h5>Welcome Series (5–7 emails)</h5><p>First impressions that build trust, set expectations, and guide new subscribers toward conversion.</p></div></div><div class="del-card"><div class="del-icon">🛒</div><div class="del-body"><h5>Cart Abandonment</h5><p>Recover lost revenue with timely, personalized reminders that convert 15–25% of abandoned carts.</p></div></div><div class="del-card"><div class="del-icon">🏆</div><div class="del-body"><h5>Post-Purchase Series</h5><p>Onboarding, cross-sells, review requests, and referral programs to maximize customer lifetime value.</p></div></div><div class="del-card"><div class="del-icon">😴</div><div class="del-body"><h5>Win-Back Campaigns</h5><p>Re-engage dormant subscribers with compelling offers before they unsubscribe permanently.</p></div></div><div class="del-card"><div class="del-icon">🎁</div><div class="del-body"><h5>Promotional Campaigns</h5><p>Sale announcements, seasonal campaigns, and promotional sequences that drive revenue spikes.</p></div></div><div class="del-card"><div class="del-icon">🎂</div><div class="del-body"><h5>Lifecycle Automation</h5><p>Birthday emails, anniversary sequences, loyalty rewards, and milestone-triggered campaigns.</p></div></div><div class="del-card"><div class="del-icon">🧲</div><div class="del-body"><h5>Lead Nurture Sequences</h5><p>Multi-touch nurture campaigns that educate prospects and move them toward a purchase decision.</p></div></div><div class="del-card"><div class="del-icon">📋</div><div class="del-body"><h5>Onboarding Flows</h5><p>Guide new customers through your product or service to ensure activation and reduce churn.</p></div></div></div></div></section>
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">Email Marketing <span class="accent">Pricing</span></h2></div><div class="pricing-grid" style="margin-top:2.5rem"><div class="p-card"><p class="p-name">Foundation</p><div class="p-price">$600<sub>/mo</sub></div><p class="p-desc">For businesses getting started with strategic email marketing.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Platform setup & configuration</li><li class="p-feat"><span class="ck">✓</span>Welcome sequence (5 emails)</li><li class="p-feat"><span class="ck">✓</span>2 campaigns/month</li><li class="p-feat"><span class="ck">✓</span>Basic segmentation</li><li class="p-feat"><span class="ck">✓</span>Monthly performance report</li><li class="p-feat"><span class="cx">✗</span>A/B testing</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card popular"><div class="pop-badge">★ Best Value</div><p class="p-name">Growth</p><div class="p-price">$1,400<sub>/mo</sub></div><p class="p-desc">For businesses ready to fully leverage email as a revenue channel.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Everything in Foundation</li><li class="p-feat"><span class="ck">✓</span>4 campaigns/month</li><li class="p-feat"><span class="ck">✓</span>Full automation suite (8 flows)</li><li class="p-feat"><span class="ck">✓</span>Advanced segmentation</li><li class="p-feat"><span class="ck">✓</span>A/B testing programme</li><li class="p-feat"><span class="ck">✓</span>Revenue attribution reporting</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card"><p class="p-name">Enterprise</p><div class="p-price">$3,000<sub>/mo</sub></div><p class="p-desc">For high-volume brands with complex automation and large subscriber lists.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Everything in Growth</li><li class="p-feat"><span class="ck">✓</span>Unlimited campaigns</li><li class="p-feat"><span class="ck">✓</span>Custom automation flows</li><li class="p-feat"><span class="ck">✓</span>SMS marketing integration</li><li class="p-feat"><span class="ck">✓</span>Dedicated email strategist</li><li class="p-feat"><span class="ck">✓</span>Bi-weekly strategy calls</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Custom Quote</span></div></div></div></section>
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Turn Your Email List into a <span class="accent">Revenue Machine</span></h2><p class="lead" style="margin:16px auto 2.5rem">Start generating consistent, measurable revenue from email marketing.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Start Your Campaign</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICE: DESIGN ═══ -->
+<div class="page" id="page-service-design">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Graphic Design</div><p class="tag">🎨 Graphic Design</p><h1 style="margin:16px 0">Design That Makes Your Brand <span class="accent">Impossible to Ignore</span></h1><p class="page-hero-desc">From logos and brand identities to UI/UX and print — visuals that communicate your brand with precision, creativity, and lasting impact.</p><div style="margin-top:2rem"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Start Design Project</span></div></div></section>
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">What We Create</p><h2 class="h2" style="margin:16px 0">Every Design Service <span class="accent">Your Business Needs</span></h2></div><div class="benefits-grid" style="margin-top:2.5rem"><div class="benefit-card"><div class="ben-icon">🏷️</div><h4>Brand Identity & Logo Design</h4><p>Full brand identities including logo design, colour palette, typography system, brand guidelines, and all brand assets in every format needed.</p></div><div class="benefit-card"><div class="ben-icon">📱</div><h4>UI/UX Design</h4><p>User-centered digital product design. We research, wireframe, and design interfaces that are beautiful, intuitive, and conversion-optimized.</p></div><div class="benefit-card"><div class="ben-icon">📲</div><h4>Social Media Graphics</h4><p>Scroll-stopping posts, stories, reels covers, and ad creatives for Instagram, LinkedIn, Facebook, Twitter, and TikTok — fully on-brand.</p></div><div class="benefit-card"><div class="ben-icon">🖨️</div><h4>Print & Packaging Design</h4><p>Business cards, brochures, flyers, rollup banners, packaging, and all print materials that command attention and reflect your brand quality.</p></div><div class="benefit-card"><div class="ben-icon">🖼️</div><h4>Marketing Collateral</h4><p>Pitch decks, presentation templates, infographics, case study documents, and all the visual assets your marketing and sales teams need.</p></div><div class="benefit-card"><div class="ben-icon">🎬</div><h4>Motion Graphics & Animation</h4><p>Animated logos, explainer videos, social media animations, and motion graphics that bring your brand to life in digital environments.</p></div></div></div></section>
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Our Design Toolkit</p><h2 class="h2" style="margin:16px 0">Industry-Standard <span class="accent">Design Tools</span></h2></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem"><div class="mini-card"><div class="mini-icon">🎨</div><h4>Adobe Illustrator</h4><p>Vector graphics & logo design</p></div><div class="mini-card"><div class="mini-icon">🖼️</div><h4>Adobe Photoshop</h4><p>Photo editing & digital art</p></div><div class="mini-card"><div class="mini-icon">📐</div><h4>Figma</h4><p>UI/UX design & prototyping</p></div><div class="mini-card"><div class="mini-icon">📄</div><h4>Adobe InDesign</h4><p>Print layouts & publications</p></div><div class="mini-card"><div class="mini-icon">🎬</div><h4>After Effects</h4><p>Motion graphics & animation</p></div><div class="mini-card"><div class="mini-icon">🎥</div><h4>Adobe Premiere Pro</h4><p>Video editing & production</p></div><div class="mini-card"><div class="mini-icon">📊</div><h4>Canva Pro</h4><p>Brand templates & team assets</p></div><div class="mini-card"><div class="mini-icon">🌐</div><h4>Adobe XD</h4><p>Interactive prototypes</p></div></div></div></section>
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">Graphic Design <span class="accent">Pricing</span></h2></div><div class="pricing-grid" style="margin-top:2.5rem"><div class="p-card"><p class="p-name">Logo & Brand Starter</p><div class="p-price">$800<sub> starting</sub></div><p class="p-desc">For new businesses needing a professional brand identity to get started.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Logo design (3 concepts)</li><li class="p-feat"><span class="ck">✓</span>Colour palette selection</li><li class="p-feat"><span class="ck">✓</span>Typography selection</li><li class="p-feat"><span class="ck">✓</span>Business card design</li><li class="p-feat"><span class="ck">✓</span>All source files included</li><li class="p-feat"><span class="cx">✗</span>Brand guidelines document</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card popular"><div class="pop-badge">★ Most Popular</div><p class="p-name">Full Brand Identity</p><div class="p-price">$2,800<sub> starting</sub></div><p class="p-desc">Comprehensive brand identity system for established businesses.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Everything in Starter</li><li class="p-feat"><span class="ck">✓</span>Full brand guidelines (40+ pages)</li><li class="p-feat"><span class="ck">✓</span>Social media kit (10 templates)</li><li class="p-feat"><span class="ck">✓</span>Email signature design</li><li class="p-feat"><span class="ck">✓</span>Letterhead & stationery</li><li class="p-feat"><span class="ck">✓</span>Unlimited revisions</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card"><p class="p-name">UI/UX Design</p><div class="p-price">$3,500<sub>+ starting</sub></div><p class="p-desc">Complete UI/UX design for web and mobile applications.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>User research & personas</li><li class="p-feat"><span class="ck">✓</span>Information architecture</li><li class="p-feat"><span class="ck">✓</span>Wireframes & prototypes</li><li class="p-feat"><span class="ck">✓</span>High-fidelity UI design</li><li class="p-feat"><span class="ck">✓</span>Design system creation</li><li class="p-feat"><span class="ck">✓</span>Developer handoff files</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Custom Quote</span></div></div></div></section>
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Create a Brand That <span class="accent">Stands Out</span></h2><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Start Design Project</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICE: CONTENT ═══ -->
+<div class="page" id="page-service-content">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Content Writing</div><p class="tag">✍️ Content Writing</p><h1 style="margin:16px 0">Words That <span class="accent">Attract, Build Trust & Convert</span></h1><p class="page-hero-desc">Strategic, SEO-optimized content that positions your brand as the authority in your industry and turns readers into paying customers.</p><div style="margin-top:2rem"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Content Quote</span></div></div></section>
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">What We Write</p><h2 class="h2" style="margin:16px 0">Every Type of Content <span class="accent">Your Business Needs</span></h2></div><div class="benefits-grid" style="margin-top:2.5rem"><div class="benefit-card"><div class="ben-icon">📝</div><h4>Blog Posts & Articles</h4><p>In-depth, keyword-optimized blog posts that rank on Google, build topical authority, and drive qualified organic traffic consistently over time.</p></div><div class="benefit-card"><div class="ben-icon">🏠</div><h4>Website Copywriting</h4><p>Compelling homepage, service, about, and landing page copy that communicates your value proposition clearly and converts visitors into leads.</p></div><div class="benefit-card"><div class="ben-icon">🛍️</div><h4>Product Descriptions</h4><p>Persuasive, SEO-friendly product copy that highlights benefits, overcomes objections, and drives purchase decisions for e-commerce brands.</p></div><div class="benefit-card"><div class="ben-icon">📋</div><h4>Whitepapers & Case Studies</h4><p>Long-form thought leadership content and detailed case studies that generate high-quality B2B leads and establish industry authority.</p></div><div class="benefit-card"><div class="ben-icon">📧</div><h4>Email Copywriting</h4><p>Subject lines and email body copy that get opened, read, clicked, and converted — based on psychology, not guesswork.</p></div><div class="benefit-card"><div class="ben-icon">📱</div><h4>Social Media Content</h4><p>Platform-optimized captions, content calendars, and social media copy that builds community and drives engagement consistently.</p></div></div></div></section>
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">Content Writing <span class="accent">Pricing</span></h2></div><div class="pricing-grid" style="margin-top:2.5rem"><div class="p-card"><p class="p-name">Starter Content</p><div class="p-price">$400<sub>/mo</sub></div><p class="p-desc">For businesses establishing their content presence.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>4 blog posts/month (800 words)</li><li class="p-feat"><span class="ck">✓</span>Keyword research included</li><li class="p-feat"><span class="ck">✓</span>SEO optimization</li><li class="p-feat"><span class="ck">✓</span>2 revisions per post</li><li class="p-feat"><span class="cx">✗</span>Social media content</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card popular"><div class="pop-badge">★ Best Value</div><p class="p-name">Growth Content</p><div class="p-price">$900<sub>/mo</sub></div><p class="p-desc">For businesses serious about content marketing and organic growth.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>8 blog posts (1,200 words avg)</li><li class="p-feat"><span class="ck">✓</span>2 long-form pieces (2,500+ words)</li><li class="p-feat"><span class="ck">✓</span>12 social media captions</li><li class="p-feat"><span class="ck">✓</span>Monthly content calendar</li><li class="p-feat"><span class="ck">✓</span>Unlimited revisions</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card"><p class="p-name">Authority Content</p><div class="p-price">$2,200<sub>/mo</sub></div><p class="p-desc">Full content marketing engine for industry leaders.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>16 blog posts</li><li class="p-feat"><span class="ck">✓</span>1 whitepaper or case study</li><li class="p-feat"><span class="ck">✓</span>30 social media captions</li><li class="p-feat"><span class="ck">✓</span>Email newsletter copy</li><li class="p-feat"><span class="ck">✓</span>Dedicated content strategist</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div></div></div></section>
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Build a Content Strategy That <span class="accent">Drives Real Growth</span></h2><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Get Content Quote</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICE: DIGITAL MARKETING ═══ -->
+<div class="page" id="page-service-dm">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow" style="background:rgba(99,102,241,0.1)"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Digital Marketing</div><p class="tag" style="color:var(--accent2)">📣 Digital Marketing</p><h1 style="margin:16px 0">Full-Funnel Marketing That <span style="color:var(--accent2)">Drives Growth</span></h1><p class="page-hero-desc">Paid advertising, social media, CRO, and analytics — a complete digital marketing ecosystem designed to attract, convert, and retain customers at scale.</p><div class="page-hero-stats"><div class="ph-stat"><strong>5.2×</strong><span>Avg ROAS on PPC</span></div><div class="ph-stat"><strong>−44%</strong><span>Cost Per Acquisition</span></div><div class="ph-stat"><strong>+280%</strong><span>Avg Lead Increase</span></div></div><div style="margin-top:2rem;display:flex;gap:12px"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Free Marketing Audit</span><span class="btn-ghost btn btn-lg" onclick="showPage('roi')" style="cursor:pointer">Calculate ROI</span></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Our Channels</p><h2 class="h2" style="margin:16px 0">Full-Spectrum <span class="accent">Digital Marketing</span></h2><p class="lead">Every channel, every touchpoint — managed and optimized by specialists who live and breathe performance marketing.</p></div><div class="dm-channels" style="margin-top:2.5rem"><div class="dm-card"><div class="dm-icon">🎯</div><h4>Google Ads (PPC)</h4><p>Search, Display, Shopping, and YouTube campaigns managed for maximum ROAS. We build, optimize, and scale campaigns that generate qualified leads and sales — not just clicks.</p></div><div class="dm-card"><div class="dm-icon">📱</div><h4>Social Media Advertising</h4><p>Facebook, Instagram, LinkedIn, TikTok, and Snapchat ads managed by certified experts. From awareness campaigns to retargeting funnels that convert warm audiences.</p></div><div class="dm-card"><div class="dm-icon">🔄</div><h4>Conversion Rate Optimization</h4><p>Systematic testing of landing pages, checkout flows, and CTAs to increase the percentage of visitors who take action — squeezing more revenue from existing traffic.</p></div><div class="dm-card"><div class="dm-icon">📊</div><h4>Analytics & Data Strategy</h4><p>GA4 setup, custom dashboards, attribution modelling, and data-driven insights that connect your marketing activity to real business outcomes.</p></div><div class="dm-card"><div class="dm-icon">📲</div><h4>Social Media Management</h4><p>Organic social strategy, content creation, community management, and growth tactics for Instagram, LinkedIn, Facebook, and TikTok.</p></div><div class="dm-card"><div class="dm-icon">🤝</div><h4>Influencer Marketing</h4><p>Identify, vet, and manage influencer partnerships that reach your target audience authentically — from nano-influencers to regional celebrities.</p></div><div class="dm-card"><div class="dm-icon">📦</div><h4>Marketing Automation</h4><p>HubSpot, Salesforce, and custom marketing automation workflows that score leads, nurture prospects, and hand sales-ready opportunities to your team.</p></div><div class="dm-card"><div class="dm-icon">🌐</div><h4>Programmatic Display</h4><p>Data-driven display advertising across premium publisher networks, using audience targeting and retargeting to reach the right people at every stage of the funnel.</p></div><div class="dm-card"><div class="dm-icon">📹</div><h4>Video Marketing</h4><p>YouTube channel strategy, video ad production, and video SEO to build brand awareness and drive conversions through the highest-engagement content format.</p></div></div></div></section>
+
+<section class="section"><div class="container"><div class="two-col"><div><p class="tag">Our Approach</p><h2 class="h2" style="margin:16px 0">We Build <span class="accent">Marketing Systems</span> — Not One-Off Campaigns</h2><p class="lead" style="margin-bottom:1.25rem">Most agencies focus on single channels. We build integrated marketing ecosystems where every touchpoint works together to move prospects through your funnel more efficiently.</p><p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem">Our full-funnel approach means your PPC ads target cold audiences, social retargeting captures warm prospects, email nurtures leads toward conversion, and CRO ensures your site converts as much of that traffic as possible.</p><div class="feat-list"><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Certified Google & Meta Partners</h4><p>Our team holds active certifications in Google Ads and Meta Blueprint.</p></div></div><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>Weekly Performance Reports</h4><p>Every week you know exactly where your budget is going and what it's returning.</p></div></div><div class="feat-item"><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><h4>No Long-Term Contracts</h4><p>Month-to-month retainers. We earn your business every single month.</p></div></div></div></div><div class="img-card"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop" alt="Digital Marketing"/><div class="img-badge"><strong>5.2×</strong><span>Average ROAS</span></div></div></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">Real Results</p><h2 class="h2" style="margin:16px 0">Digital Marketing <span class="accent">Case Studies</span></h2></div><div class="results-grid" style="margin-top:2.5rem"><div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#7c2d12,#ea580c)">🛒</div><div><h4>SkyBrand E-Commerce</h4><span>Google Shopping + Meta Ads</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>6.1×</strong><span>ROAS</span></div><div class="rc-stat"><strong>−38%</strong><span>CPA reduction</span></div><div class="rc-stat"><strong>+290%</strong><span>Revenue</span></div><div class="rc-stat"><strong>90d</strong><span>To results</span></div></div><p class="rc-quote">"Webdrix took our Google Ads from a 1.8× ROAS to 6.1× in just 3 months. The results speak for themselves." — Omar K., CMO</p></div><div class="result-card"><div class="rc-head"><div class="rc-icon" style="background:linear-gradient(135deg,#1e3a5f,#0ea5e9)">🏦</div><div><h4>AlNoor Financial Services</h4><span>LinkedIn Ads + Content Marketing</span></div></div><div class="rc-stats"><div class="rc-stat"><strong>+280%</strong><span>Qualified leads</span></div><div class="rc-stat"><strong>−52%</strong><span>Cost per lead</span></div><div class="rc-stat"><strong>4.3×</strong><span>Pipeline value</span></div><div class="rc-stat"><strong>6mo</strong><span>Campaign</span></div></div><p class="rc-quote">"The LinkedIn strategy Webdrix built for us generated more qualified leads in 6 months than our previous 2 years combined." — Fatima A.</p></div></div></div></section>
+
+<section class="section"><div class="container"><div class="sh center"><p class="tag">Investment</p><h2 class="h2" style="margin:16px 0">Digital Marketing <span class="accent">Pricing</span></h2><p class="lead">Retainer pricing excludes ad spend. We manage your budget for maximum performance.</p></div><div class="pricing-grid" style="margin-top:2.5rem"><div class="p-card"><p class="p-name">Starter</p><div class="p-price">$1,200<sub>/mo</sub></div><p class="p-desc">For businesses running 1–2 channels and starting their paid strategy.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>1 platform (Google or Meta)</li><li class="p-feat"><span class="ck">✓</span>Campaign setup & strategy</li><li class="p-feat"><span class="ck">✓</span>Weekly optimization</li><li class="p-feat"><span class="ck">✓</span>Monthly performance report</li><li class="p-feat"><span class="ck">✓</span>Ad spend up to $5,000/mo</li><li class="p-feat"><span class="cx">✗</span>CRO & landing page testing</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card popular"><div class="pop-badge">★ Best Value</div><p class="p-name">Performance</p><div class="p-price">$2,800<sub>/mo</sub></div><p class="p-desc">Multi-channel marketing for businesses serious about aggressive growth.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>Up to 3 platforms</li><li class="p-feat"><span class="ck">✓</span>Full funnel strategy</li><li class="p-feat"><span class="ck">✓</span>CRO & landing page testing</li><li class="p-feat"><span class="ck">✓</span>Social media management</li><li class="p-feat"><span class="ck">✓</span>Weekly calls + reports</li><li class="p-feat"><span class="ck">✓</span>Ad spend up to $20,000/mo</li></ul><span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Started</span></div><div class="p-card"><p class="p-name">Enterprise</p><div class="p-price">$5,500<sub>/mo</sub></div><p class="p-desc">Full-service marketing department for high-growth brands.</p><ul class="p-features"><li class="p-feat"><span class="ck">✓</span>All channels managed</li><li class="p-feat"><span class="ck">✓</span>Dedicated marketing director</li><li class="p-feat"><span class="ck">✓</span>Influencer campaigns</li><li class="p-feat"><span class="ck">✓</span>Video ad production</li><li class="p-feat"><span class="ck">✓</span>Unlimited ad spend</li><li class="p-feat"><span class="ck">✓</span>Bi-weekly executive reports</li></ul><span class="btn btn-ghost" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Get Custom Quote</span></div></div></div></section>
+
+<section class="section bg2"><div class="container"><div class="sh center"><p class="tag">FAQs</p><h2 class="h2" style="margin:16px 0">Digital Marketing <span class="accent">Questions Answered</span></h2></div><div class="faq-list" style="margin-top:2.5rem;max-width:800px;margin-left:auto;margin-right:auto"><div class="faq-item"><button class="faq-q">How quickly will I see results from paid advertising?<span class="faq-icon">+</span></button><div class="faq-a"><p>Paid ads can generate leads and sales within days of launch. However, the first 30–60 days are typically a learning and optimization phase. Our clients usually see significant improvement in ROAS between months 2 and 3 as we gather data, refine targeting, and optimize creative.</p></div></div><div class="faq-item"><button class="faq-q">What ad spend budget do I need?<span class="faq-icon">+</span></button><div class="faq-a"><p>Our management fee is separate from your ad spend, which you pay directly to the platforms. We recommend a minimum of $2,000/month in ad spend for meaningful data and results. For competitive industries or e-commerce, $5,000+ per month delivers significantly better outcomes.</p></div></div><div class="faq-item"><button class="faq-q">Do you guarantee results?<span class="faq-icon">+</span></button><div class="faq-a"><p>We can't guarantee specific ROAS numbers as results depend on your industry, competition, product, and market. What we guarantee is best-in-class execution, full transparency on performance, proactive optimization, and a track record you can verify through our case studies.</p></div></div></div></div></section>
+
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Ready to Build a <span class="accent">Marketing Engine</span> That Scales?</h2><p class="lead" style="margin:16px auto 2.5rem">Get a free marketing audit — we'll identify your biggest growth opportunities and build a roadmap to capture them.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Free Marketing Audit</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══ SERVICES OVERVIEW ═══ -->
+<div class="page" id="page-services">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Services</div><p class="tag">What We Do</p><h1 style="margin:16px 0">Digital Services That <span class="accent">Drive Real Growth</span></h1><p class="page-hero-desc">Six core service lines, each run by dedicated specialists with deep expertise and proven results.</p></div></section>
+<section class="section"><div class="container"><div class="srv-grid"><div class="srv-card" onclick="showPage('service-web')"><div class="srv-num">01</div><div class="srv-icon-wrap">🌐</div><h3>Web Development</h3><p>WordPress, Shopify, WooCommerce, HTML/CSS, Bootstrap, Elementor Pro, Wix — high-performance, conversion-focused websites.</p><span class="srv-arrow">→</span></div><div class="srv-card" onclick="showPage('service-seo')"><div class="srv-num">02</div><div class="srv-icon-wrap">🔍</div><h3>SEO Services</h3><p>Technical SEO, on-page optimization, link building, and content strategy to earn you top rankings and qualified traffic.</p><span class="srv-arrow">→</span></div><div class="srv-card" onclick="showPage('service-email')"><div class="srv-num">03</div><div class="srv-icon-wrap">📧</div><h3>Email Marketing</h3><p>Campaigns and automation sequences that nurture leads, convert prospects, and retain customers for long-term value.</p><span class="srv-arrow">→</span></div><div class="srv-card" onclick="showPage('service-design')"><div class="srv-num">04</div><div class="srv-icon-wrap">🎨</div><h3>Graphic Design</h3><p>Brand identities, UI/UX, social media graphics, and print materials that make your brand unforgettable.</p><span class="srv-arrow">→</span></div><div class="srv-card" onclick="showPage('service-content')"><div class="srv-num">05</div><div class="srv-icon-wrap">✍️</div><h3>Content Writing</h3><p>SEO-optimized, authoritative content that builds your brand, drives organic traffic, and converts readers.</p><span class="srv-arrow">→</span></div><div class="srv-card" onclick="showPage('service-dm')" style="background:linear-gradient(135deg,rgba(14,165,233,0.06),rgba(99,102,241,0.04));border-color:rgba(14,165,233,0.15)"><div class="srv-num">06</div><div class="srv-icon-wrap" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.3)">📣</div><h3>Digital Marketing</h3><p>PPC, social ads, CRO, analytics, influencer marketing — full-funnel digital marketing that drives growth at scale.</p><span class="srv-arrow">→</span></div></div></div></section>
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">Not Sure Which Service <span class="accent">You Need?</span></h2><p class="lead" style="margin:16px auto 2.5rem">Let's talk. We'll assess your situation and recommend the right approach for your goals and budget.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Book Free Consultation</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════ ROI CALCULATOR ═══════════════════════════════ -->
+<div class="page" id="page-roi">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>ROI Calculator</div><p class="tag">Free Tool</p><h1 style="margin:16px 0">Digital Marketing <span class="accent">ROI Calculator</span></h1><p class="page-hero-desc">Estimate the return on your investment across our services. Adjust the sliders to match your business and see projected results.</p></div></section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="roi-layout">
+      <div class="roi-form">
+        <h3 style="font-size:1.3rem;margin-bottom:6px">Your Business Details</h3>
+        <p class="muted" style="font-size:0.85rem;margin-bottom:2rem">Fill in your current numbers to calculate projected ROI.</p>
+        
+        <div style="margin-bottom:1.5rem">
+          <p style="font-size:0.82rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:10px">Select Service(s)</p>
+          <div class="service-selector">
+            <div class="svc-opt selected" onclick="toggleService(this)">🌐 Web Development</div>
+            <div class="svc-opt" onclick="toggleService(this)">🔍 SEO</div>
+            <div class="svc-opt" onclick="toggleService(this)">📣 Digital Marketing</div>
+            <div class="svc-opt" onclick="toggleService(this)">📧 Email Marketing</div>
+            <div class="svc-opt" onclick="toggleService(this)">🎨 Graphic Design</div>
+            <div class="svc-opt" onclick="toggleService(this)">✍️ Content Writing</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Monthly Website Visitors <span class="range-val" id="visitors-val">2,000</span></label>
+          <input type="range" class="range-input" id="visitors" min="100" max="50000" step="100" value="2000" oninput="updateCalc()"/>
+        </div>
+        <div class="form-group">
+          <label>Current Conversion Rate <span class="range-val" id="conv-val">2%</span></label>
+          <input type="range" class="range-input" id="conv" min="0.5" max="15" step="0.5" value="2" oninput="updateCalc()"/>
+        </div>
+        <div class="form-group">
+          <label>Average Order / Deal Value <span class="range-val" id="aov-val">$500</span></label>
+          <input type="range" class="range-input" id="aov" min="50" max="50000" step="50" value="500" oninput="updateCalc()"/>
+        </div>
+        <div class="form-group">
+          <label>Monthly Marketing Budget <span class="range-val" id="budget-val">$2,000</span></label>
+          <input type="range" class="range-input" id="budget" min="500" max="50000" step="500" value="2000" oninput="updateCalc()"/>
+        </div>
+        <div class="form-group">
+          <label>Industry</label>
+          <select onchange="updateCalc()" id="industry" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:0.75rem 1rem;color:var(--white);font-family:var(--font);width:100%;outline:none">
+            <option value="1.3">E-Commerce / Retail</option>
+            <option value="1.5">SaaS / Technology</option>
+            <option value="1.2">Professional Services</option>
+            <option value="1.4">Healthcare</option>
+            <option value="1.6">Finance & Insurance</option>
+            <option value="1.1">Hospitality & Tourism</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <p style="font-size:0.78rem;color:var(--muted);text-align:center;line-height:1.6">*Projections are estimates based on industry averages and our client data. Results vary by market, competition, and execution.</p>
+      </div>
+
+      <div class="roi-results has-results" id="roi-results">
+        <h3 style="font-size:1.2rem;margin-bottom:4px">Projected Results</h3>
+        <p class="muted" style="font-size:0.82rem;margin-bottom:1.75rem">Based on your inputs, within 12 months:</p>
+        
+        <div class="roi-metric"><strong id="proj-revenue">$0</strong><span>Projected Additional Annual Revenue</span></div>
+        
+        <div class="roi-breakdown">
+          <div class="roi-row"><span>Current Monthly Revenue (est.)</span><strong id="curr-rev">$0</strong></div>
+          <div class="roi-row"><span>Projected Monthly Revenue</span><strong id="proj-rev">$0</strong></div>
+          <div class="roi-row"><span>Traffic Increase (12 months)</span><strong id="traffic-inc">0%</strong></div>
+          <div class="roi-row"><span>Conversion Rate Improvement</span><strong id="conv-inc">0%</strong></div>
+          <div class="roi-row"><span>Annual Marketing Investment</span><strong id="annual-invest">$0</strong></div>
+          <div class="roi-row" style="border-top:1px solid var(--border2);margin-top:6px;padding-top:14px"><span style="font-weight:600;color:var(--white)">Estimated Annual ROI</span><strong id="roi-pct" style="font-size:1.1rem;color:var(--accent3)">0%</strong></div>
+        </div>
+
+        <div class="roi-chart"><div class="roi-bar" id="roi-bar" style="width:0%"></div></div>
+        <p style="font-size:0.7rem;color:var(--muted);text-align:right;margin-top:4px" id="roi-bar-label">ROI: 0%</p>
+        
+        <div style="margin-top:1.75rem;padding:1.25rem;background:var(--bg3);border-radius:var(--r2);text-align:center">
+          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Want a more accurate projection for your business?</p>
+          <span class="btn" onclick="showPage('contact')" style="cursor:pointer;width:100%;justify-content:center">Get Free Custom Audit</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div style="margin-top:4rem">
+      <div class="sh center"><p class="tag">How We Compare</p><h2 class="h2" style="margin:16px 0">What Your Investment <span class="accent">Gets You</span></h2></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-top:2.5rem">
+        <table style="width:100%;border-collapse:collapse;font-size:0.88rem">
+          <thead><tr style="background:var(--surface2)"><th style="padding:1rem 1.5rem;text-align:left;color:var(--muted);font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em">Service</th><th style="padding:1rem;text-align:center;color:var(--muted);font-size:0.78rem;text-transform:uppercase">In-House Cost</th><th style="padding:1rem;text-align:center;color:var(--muted);font-size:0.78rem;text-transform:uppercase">Freelancer</th><th style="padding:1rem;text-align:center;color:var(--accent);font-size:0.78rem;text-transform:uppercase;font-weight:700">Webdrix</th><th style="padding:1rem;text-align:center;color:var(--muted);font-size:0.78rem;text-transform:uppercase">Your Saving</th></tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:1rem 1.5rem;font-weight:500">Web Development</td><td style="padding:1rem;text-align:center;color:var(--muted)">$8,000–$15,000/yr</td><td style="padding:1rem;text-align:center;color:var(--muted)">$3,500–$8,000</td><td style="padding:1rem;text-align:center;color:var(--accent);font-weight:600">From $3,500</td><td style="padding:1rem;text-align:center;color:var(--accent3);font-weight:600">Up to 75%</td></tr>
+            <tr style="border-top:1px solid var(--border);background:rgba(255,255,255,0.01)"><td style="padding:1rem 1.5rem;font-weight:500">SEO Services</td><td style="padding:1rem;text-align:center;color:var(--muted)">$60,000+/yr</td><td style="padding:1rem;text-align:center;color:var(--muted)">$1,500–$3,000/mo</td><td style="padding:1rem;text-align:center;color:var(--accent);font-weight:600">From $800/mo</td><td style="padding:1rem;text-align:center;color:var(--accent3);font-weight:600">Up to 65%</td></tr>
+            <tr style="border-top:1px solid var(--border)"><td style="padding:1rem 1.5rem;font-weight:500">Digital Marketing</td><td style="padding:1rem;text-align:center;color:var(--muted)">$80,000+/yr</td><td style="padding:1rem;text-align:center;color:var(--muted)">$2,000–$5,000/mo</td><td style="padding:1rem;text-align:center;color:var(--accent);font-weight:600">From $1,200/mo</td><td style="padding:1rem;text-align:center;color:var(--accent3);font-weight:600">Up to 60%</td></tr>
+            <tr style="border-top:1px solid var(--border);background:rgba(255,255,255,0.01)"><td style="padding:1rem 1.5rem;font-weight:500">Email Marketing</td><td style="padding:1rem;text-align:center;color:var(--muted)">$50,000+/yr</td><td style="padding:1rem;text-align:center;color:var(--muted)">$800–$2,000/mo</td><td style="padding:1rem;text-align:center;color:var(--accent);font-weight:600">From $600/mo</td><td style="padding:1rem;text-align:center;color:var(--accent3);font-weight:600">Up to 70%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec"><div class="cta-gradient"></div><div class="container cta-content"><h2 class="h2">The Numbers Make Sense. <span class="accent">Let's Talk.</span></h2><p class="lead" style="margin:16px auto 2.5rem">Get a free, detailed audit and custom projection for your specific business — no generic estimates.</p><div class="cta-btns"><span class="btn btn-lg" onclick="showPage('contact')" style="cursor:pointer">Book Free Consultation</span></div></div></section>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════ BLOG ═══════════════════════════════ -->
+<div class="page" id="page-blog">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Blog</div><p class="tag">Insights & Ideas</p><h1 style="margin:16px 0">Digital Marketing <span class="accent">Insights</span></h1><p class="page-hero-desc">Expert advice, actionable strategies, and industry insights from the Webdrix team.</p></div></section>
+
+<section class="section bg2">
+  <div class="container">
+    <!-- FEATURED POST -->
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden;margin-bottom:3rem;cursor:pointer;transition:var(--tr)" onclick="showPage('blog-single')" onmouseenter="this.style.borderColor='rgba(14,165,233,0.3)'" onmouseleave="this.style.borderColor='var(--border)'">
+      <div style="height:380px;overflow:hidden;position:relative"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease" alt="Featured Post"/><div class="blog-cat-pill">Web Development</div></div>
+      <div style="padding:2.5rem;display:flex;flex-direction:column;justify-content:center">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);color:var(--accent);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:50px;margin-bottom:1rem;width:fit-content">★ Featured</div>
+        <div class="blog-meta" style="margin-bottom:12px">March 5, 2025 · 8 min read · <span style="color:var(--accent)">Marcus Allen</span></div>
+        <h2 style="font-size:1.5rem;font-weight:700;line-height:1.3;margin-bottom:1rem">10 Web Design Trends That Will Dominate in 2025</h2>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem">Discover the cutting-edge design patterns, animations, and UX approaches that are redefining the web this year — from bento grids to kinetic typography.</p>
+        <span class="read-more" style="font-size:0.88rem">Read Full Article →</span>
+      </div>
+    </div>
+
+    <div class="blog-list-layout">
+      <div class="blog-list-cards">
+        <div class="blc" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blc-img"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=400&h=220&fit=crop" alt="SEO"/></div><div class="blc-body"><div class="blog-cat-pill" style="position:static;display:inline-block;margin-bottom:6px;font-size:0.65rem">SEO</div><div class="blog-meta">Feb 20, 2025 · 6 min read</div><h3>The Ultimate SEO Checklist for New Websites in 2025</h3><p>Launch your site with a solid SEO foundation using this comprehensive 47-point checklist built from our experience with 120+ SEO campaigns.</p><span class="read-more">Read Article →</span></div></div>
+        <div class="blc" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blc-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=220&fit=crop" alt="Digital Marketing"/></div><div class="blc-body"><div class="blog-cat-pill" style="position:static;display:inline-block;margin-bottom:6px;font-size:0.65rem">Digital Marketing</div><div class="blog-meta">Feb 10, 2025 · 7 min read</div><h3>How to Build a Winning Digital Marketing Funnel in 2025</h3><p>A proven framework for attracting cold audiences, converting warm prospects, and retaining customers for maximum lifetime value.</p><span class="read-more">Read Article →</span></div></div>
+        <div class="blc" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blc-img"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=220&fit=crop" alt="Email"/></div><div class="blc-body"><div class="blog-cat-pill" style="position:static;display:inline-block;margin-bottom:6px;font-size:0.65rem">Email Marketing</div><div class="blog-meta">Jan 28, 2025 · 5 min read</div><h3>How to Write Email Subject Lines That Get 40%+ Open Rates</h3><p>Proven formulas, psychological triggers, and A/B testing insights to dramatically improve your email open rates.</p><span class="read-more">Read Article →</span></div></div>
+        <div class="blc" onclick="showPage('blog-single')" style="cursor:pointer"><div class="blc-img"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=220&fit=crop" alt="Branding"/></div><div class="blc-body"><div class="blog-cat-pill" style="position:static;display:inline-block;margin-bottom:6px;font-size:0.65rem">Branding</div><div class="blog-meta">Jan 15, 2025 · 6 min read</div><h3>Brand Identity 101: How to Build a Brand People Remember</h3><p>A step-by-step guide to creating a cohesive brand identity that communicates your values and attracts your ideal customers.</p><span class="read-more">Read Article →</span></div></div>
+      </div>
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h4>Categories</h4>
+          <ul class="cat-list">
+            <li onclick="showPage('blog')"><span>Web Development</span><span class="cat-count">12</span></li>
+            <li onclick="showPage('blog')"><span>SEO</span><span class="cat-count">9</span></li>
+            <li onclick="showPage('blog')"><span>Digital Marketing</span><span class="cat-count">8</span></li>
+            <li onclick="showPage('blog')"><span>Email Marketing</span><span class="cat-count">7</span></li>
+            <li onclick="showPage('blog')"><span>Graphic Design</span><span class="cat-count">6</span></li>
+            <li onclick="showPage('blog')"><span>Content Writing</span><span class="cat-count">5</span></li>
+          </ul>
+        </div>
+        <div class="sidebar-widget">
+          <h4>Popular Posts</h4>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div onclick="showPage('blog-single')" style="cursor:pointer;display:grid;grid-template-columns:60px 1fr;gap:10px;align-items:center"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=80&h=60&fit=crop" style="width:60px;height:50px;object-fit:cover;border-radius:6px" alt=""/><div><p style="font-size:0.8rem;line-height:1.35;font-weight:500;margin-bottom:3px">10 Web Design Trends 2025</p><p style="font-size:0.72rem;color:var(--muted)">8 min read</p></div></div>
+            <div onclick="showPage('blog-single')" style="cursor:pointer;display:grid;grid-template-columns:60px 1fr;gap:10px;align-items:center"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=80&h=60&fit=crop" style="width:60px;height:50px;object-fit:cover;border-radius:6px" alt=""/><div><p style="font-size:0.8rem;line-height:1.35;font-weight:500;margin-bottom:3px">Ultimate SEO Checklist 2025</p><p style="font-size:0.72rem;color:var(--muted)">6 min read</p></div></div>
+          </div>
+        </div>
+        <div class="sidebar-widget" style="background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.05));border-color:rgba(14,165,233,0.2)">
+          <h4>Free Audit</h4>
+          <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.7">Get a free audit of your website's SEO, performance, and conversion potential.</p>
+          <span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Claim Free Audit →</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p><div class="socials"><div class="social-btn">in</div><div class="social-btn">𝕏</div></div></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-seo')">SEO Services</a></li><li><a onclick="showPage('service-dm')">Digital Marketing</a></li></ul></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════ BLOG SINGLE ═══════════════════════════════ -->
+<div class="page" id="page-blog-single">
+<section class="blog-single-hero">
+  <div class="page-hero-bg" style="opacity:0.5"><div class="page-hero-glow"></div></div>
+  <div class="bs-hero-content">
+    <div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span><a onclick="showPage('blog')">Blog</a><span class="sep">›</span>Web Development</div>
+    <div class="blog-cat-pill" style="position:static;display:inline-block;margin:12px 0">Web Development</div>
+    <h1 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:1.25rem">10 Web Design Trends That Will Dominate in 2025</h1>
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" class="author-ava" style="width:44px;height:44px" alt="Marcus Allen"/>
+        <div><strong style="display:block;font-size:0.9rem">Marcus Allen</strong><span style="font-size:0.75rem;color:var(--accent)">Creative Director, Webdrix</span></div>
+      </div>
+      <span style="font-size:0.78rem;color:var(--muted)">March 5, 2025</span>
+      <span style="font-size:0.78rem;color:var(--muted)">8 min read</span>
+      <span style="font-size:0.78rem;color:var(--muted)">12.4K views</span>
+    </div>
+  </div>
+</section>
+<div class="bs-hero-img container">
+  <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=500&fit=crop" alt="Web Design Trends 2025"/>
+</div>
+
+<section style="padding:0 0 60px">
+  <div class="container">
+    <div class="bs-layout">
+      <article class="bs-body">
+        <p>The web design landscape evolves at a breathtaking pace, and 2025 is shaping up to be one of the most transformative years yet. With AI tools becoming mainstream design instruments, new CSS capabilities unlocking creative possibilities that were impossible two years ago, and user expectations hitting all-time highs — designers and developers need to stay ahead.</p>
+        <p>We've analysed over 10,000 websites launched this year, studied the portfolios of the world's leading agencies, and synthesized our findings into the 10 trends that are genuinely defining the visual language of 2025.</p>
+
+        <h2>1. Bento Grid Layouts</h2>
+        <p>Inspired by the Japanese bento box concept, bento grid layouts have exploded in popularity — particularly among tech companies and SaaS platforms. The format presents multiple pieces of information in a visually organized, modular way that's immediately scannable and highly informative.</p>
+        <p>What makes bento grids compelling is their ability to communicate complex product information at a glance. Apple's product pages have been the gold standard, but we're seeing this pattern adopted by brands of all sizes. The key is intentional hierarchy — not all cells are equal, and the sizing should reflect the importance of the content.</p>
+
+        <div class="pull-quote">"The best bento grid designs treat each cell as a mini-poster — self-contained, visually strong, and contributing to a larger narrative."</div>
+
+        <h2>2. Glassmorphism 2.0</h2>
+        <p>Glassmorphism is back — but with more sophistication and restraint than its first wave. The 2025 version uses glass effects strategically on navigation bars, cards, and modals against rich, dark, or heavily textured backgrounds.</p>
+        <p>The key difference is purposeful application. Rather than applying frost everywhere, modern glassmorphism uses the effect to create visual hierarchy and depth. The best implementations use it on overlaid elements that need to clearly separate from their background while maintaining visual connection to it.</p>
+
+        <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&h=400&fit=crop" style="width:100%;border-radius:var(--r2);margin:1.5rem 0" alt="Glassmorphism UI"/>
+
+        <h2>3. Variable Typography & Kinetic Text</h2>
+        <p>Variable fonts give designers unprecedented typographic flexibility — a single font file that can morph between different weights, widths, and optical sizes. Paired with scroll-triggered animations, kinetic typography is one of the most striking trends in premium websites this year.</p>
+        <p>We're seeing text that transforms as you scroll — words that expand or contract, headlines that rotate into view, and body text that shifts weight in response to mouse position. When done with restraint and purpose, these effects create a visceral sense of craft that static designs simply cannot match.</p>
+
+        <h2>4. Dark Mode as the New Default</h2>
+        <p>Dark-first design has crossed the tipping point from trend to expectation, particularly for tech, creative, and B2B brands. Dark UIs reduce eye strain in low-light environments, create higher contrast for visual elements, and signal a premium, modern brand identity.</p>
+        <p>The sophistication level has jumped dramatically. Early dark modes were simply white interfaces with their colours inverted. Today's dark designs are built from the ground up for darkness — using layered surface colours, carefully calibrated opacity, and accent colours chosen specifically for dark contexts.</p>
+
+        <h2>5. Micro-Interactions & Purposeful Animation</h2>
+        <p>In 2025, static interfaces feel dated. Users expect visual feedback — buttons that acknowledge presses, cards that respond to hover, navigation that smoothly transitions between states. The most effective micro-interactions are subtle, fast, and purposeful.</p>
+        <p>The key word is "purposeful." Every animation should communicate something — confirming an action, indicating state, providing orientation. Animation for its own sake is still the enemy of good UX. But the right micro-interaction, in the right place, at the right speed, makes an interface feel alive and trustworthy.</p>
+
+        <h2>6. AI-Generated & Hybrid Imagery</h2>
+        <p>The integration of AI-generated imagery with traditional photography has created a new visual vocabulary that's simultaneously familiar and surreal. The most interesting uses blend photographic realism with elements that couldn't exist in the real world.</p>
+
+        <h2>7. Scroll-Triggered Experiences</h2>
+        <p>Scrollytelling — the use of scroll position to trigger animations, reveal content, and guide narrative — has matured from a novelty to an established design pattern. The best implementations feel cinematic: they control pacing, build anticipation, and reward patient scrollers with moments of delight.</p>
+
+        <div class="pull-quote">"Scroll should feel like progress through a story, not just movement down a page. The best scrollytelling designs make you want to see what comes next."</div>
+
+        <h2>8. Extreme Minimalism & Intentional Whitespace</h2>
+        <p>As a counterweight to maximalist trends, extreme minimalism is having a resurgence. These designs strip everything away except what's absolutely necessary — a bold headline, one image, one action. Nothing more. The courage required to leave that much whitespace is itself a brand statement.</p>
+
+        <h2>9. 3D Elements Without Full 3D</h2>
+        <p>Full WebGL 3D experiences remain niche due to performance concerns, but designers are achieving remarkable depth through CSS transforms, layered parallax, and carefully constructed illusions. The result is designs that feel dimensional without the complexity of true 3D rendering.</p>
+
+        <h2>10. Brutalist Typography Meets Refined Layouts</h2>
+        <p>The clash of oversized, rule-breaking typography with controlled, grid-based layouts is creating a distinctive aesthetic that's assertive and memorable. It's a high-risk, high-reward approach — when executed with genuine skill, the tension between the brutal and the refined creates extraordinary visual energy.</p>
+
+        <h2>Final Thoughts</h2>
+        <p>The most memorable websites of 2025 don't chase trends — they use trends as a vocabulary to communicate something specific about the brand they represent. Understanding your audience, their expectations, and the message you need to convey is more important than implementing any of the trends listed here.</p>
+        <p>The best use of this list isn't to tick boxes. It's to understand the direction of visual culture in 2025 and find the two or three trends that genuinely serve your brand's story.</p>
+
+        <div class="divider"></div>
+
+        <div class="author-box">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" class="author-ava" alt="Marcus Allen"/>
+          <div>
+            <h4>Marcus Allen</h4>
+            <span>Creative Director at Webdrix</span>
+            <p>Marcus has 12 years of experience designing digital experiences for brands across the Middle East, Europe, and North America. He leads Webdrix's design team and obsesses over the intersection of aesthetics and conversion.</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">Share This Article</h4>
+          <div class="share-row">
+            <button class="share-btn">🐦 Twitter/X</button>
+            <button class="share-btn">💼 LinkedIn</button>
+            <button class="share-btn">📘 Facebook</button>
+            <button class="share-btn">🔗 Copy Link</button>
+            <button class="share-btn">📧 Email</button>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(135deg,rgba(14,165,233,0.07),rgba(99,102,241,0.05));border:1px solid rgba(14,165,233,0.2);border-radius:var(--r2);padding:2rem;text-align:center;margin:2rem 0">
+          <h3 style="margin-bottom:8px;font-size:1.2rem">Apply These Trends to Your Website</h3>
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.25rem">Our design team builds stunning, trend-forward websites that convert. Get a free quote today.</p>
+          <span class="btn" onclick="showPage('contact')" style="cursor:pointer">Get Free Website Quote</span>
+        </div>
+
+        <h3 style="margin-bottom:1.25rem">Related Articles</h3>
+        <div class="related-grid">
+          <div class="rel-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="rel-img"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=300&h=160&fit=crop" alt="SEO"/></div><div class="rel-body"><div class="blog-cat-pill">SEO</div><h4>The Ultimate SEO Checklist for 2025</h4></div></div>
+          <div class="rel-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="rel-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=160&fit=crop" alt="Marketing"/></div><div class="rel-body"><div class="blog-cat-pill">Digital Marketing</div><h4>Building a Winning Marketing Funnel</h4></div></div>
+          <div class="rel-card" onclick="showPage('blog-single')" style="cursor:pointer"><div class="rel-img"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=300&h=160&fit=crop" alt="Brand"/></div><div class="rel-body"><div class="blog-cat-pill">Branding</div><h4>Brand Identity 101 Guide</h4></div></div>
+        </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="bs-sidebar">
+        <div class="sidebar-widget">
+          <h4>Table of Contents</h4>
+          <ul class="toc-list">
+            <li><a>1. Bento Grid Layouts</a></li>
+            <li><a>2. Glassmorphism 2.0</a></li>
+            <li><a>3. Variable Typography</a></li>
+            <li><a>4. Dark Mode as Default</a></li>
+            <li><a>5. Micro-Interactions</a></li>
+            <li><a>6. AI-Generated Imagery</a></li>
+            <li><a>7. Scroll-Triggered Experiences</a></li>
+            <li><a>8. Extreme Minimalism</a></li>
+            <li><a>9. 3D Without Full 3D</a></li>
+            <li><a>10. Brutalist Typography</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-widget">
+          <h4>Categories</h4>
+          <ul class="cat-list">
+            <li onclick="showPage('blog')"><span>Web Development</span><span class="cat-count">12</span></li>
+            <li onclick="showPage('blog')"><span>SEO</span><span class="cat-count">9</span></li>
+            <li onclick="showPage('blog')"><span>Digital Marketing</span><span class="cat-count">8</span></li>
+            <li onclick="showPage('blog')"><span>Email Marketing</span><span class="cat-count">7</span></li>
+          </ul>
+        </div>
+        <div class="sidebar-widget" style="background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.05));border-color:rgba(14,165,233,0.2)">
+          <h4>Free Website Audit</h4>
+          <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.7">Get a comprehensive audit of your website — completely free.</p>
+          <span class="btn" style="cursor:pointer;width:100%;justify-content:center" onclick="showPage('contact')">Claim Free Audit →</span>
+        </div>
+        <div class="sidebar-widget">
+          <h4>Newsletter</h4>
+          <p style="font-size:0.83rem;color:var(--muted);margin-bottom:12px;line-height:1.7">Get weekly insights from our team delivered to your inbox.</p>
+          <input type="email" placeholder="Your email address" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:0.75rem 1rem;color:var(--white);font-family:var(--font);font-size:0.85rem;outline:none;width:100%;margin-bottom:8px"/>
+          <button style="width:100%;background:var(--accent);border:none;border-radius:var(--r);padding:0.75rem;color:var(--bg);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem">Subscribe</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner.</p><div class="socials"><div class="social-btn">in</div><div class="social-btn">𝕏</div></div></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-seo')">SEO Services</a></li></ul></div><div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span>📧</span><a>info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a>+966 51 179 4304</a></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix.</p></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+<div class="page" id="page-contact">
+<section class="page-hero"><div class="page-hero-bg"><div class="page-hero-glow"></div></div><div class="container page-hero-inner"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="sep">›</span>Contact</div><p class="tag">Let's Talk</p><h1 style="margin:16px 0">Ready to Grow Your <span class="accent">Business Online?</span></h1><p class="page-hero-desc">Get a free 30-minute strategy call. Our experts will assess your digital presence and build a custom growth roadmap — no pressure, no obligation.</p></div></section>
+
+<section class="section bg2">
+  <div class="container">
+    <div class="contact-layout">
+      <div>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">Get in Touch</h3>
+        <p class="lead" style="margin-bottom:2rem">Whether you have a specific project in mind or just want to explore your options, we'd love to hear from you.</p>
+        <div class="c-detail"><div class="c-icon">📧</div><div><strong>Email Us</strong><a href="mailto:info@webdrix.com">info@webdrix.com</a></div></div>
+        <div class="c-detail"><div class="c-icon">📞</div><div><strong>Call Us</strong><a href="tel:+966511794304">+966 51 179 4304</a></div></div>
+        <div class="c-detail"><div class="c-icon">📍</div><div><strong>Our Office</strong><span>Riyadh, Saudi Arabia</span></div></div>
+        <div class="c-detail"><div class="c-icon">🕐</div><div><strong>Business Hours</strong><span>Sunday–Thursday: 9:00 AM – 6:00 PM AST</span></div></div>
+        <div style="margin-top:2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem">
+          <h4 style="margin-bottom:1.25rem;font-size:1rem">Why Work With Webdrix?</h4>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent3);font-weight:700;font-size:1rem">✓</span><span style="font-size:0.875rem;color:var(--muted)">Free 30-minute strategy consultation — no strings attached</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent3);font-weight:700;font-size:1rem">✓</span><span style="font-size:0.875rem;color:var(--muted)">Custom quotes — not generic packages</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent3);font-weight:700;font-size:1rem">✓</span><span style="font-size:0.875rem;color:var(--muted)">Response within 24 business hours, guaranteed</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent3);font-weight:700;font-size:1rem">✓</span><span style="font-size:0.875rem;color:var(--muted)">No long-term contracts — month-to-month on retainers</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent3);font-weight:700;font-size:1rem">✓</span><span style="font-size:0.875rem;color:var(--muted)">300+ successful projects — and counting</span></div>
+          </div>
+        </div>
+        <!-- MAP PLACEHOLDER -->
+        <div style="margin-top:1.5rem;height:220px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+          <span style="font-size:2.5rem">📍</span>
+          <p style="font-size:0.85rem;color:var(--muted)">Riyadh, Saudi Arabia</p>
+          <a style="font-size:0.78rem;color:var(--accent);cursor:pointer">Open in Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="c-form">
+        <h3>Send Us a Message</h3>
+        <p class="muted">We'll respond within 24 hours — usually much faster.</p>
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" placeholder="John"/></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith"/></div>
+          </div>
+          <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@company.com"/></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+1 (555) 000-0000"/></div>
+          <div class="form-group"><label>Service Interested In *</label>
+            <select><option value="" disabled selected>Select a service...</option>
+              <option>Web Development</option><option>SEO Services</option><option>Email Marketing</option>
+              <option>Graphic Design</option><option>Content Writing</option><option>Digital Marketing</option>
+              <option>Multiple Services</option></select></div>
+          <div class="form-group"><label>Approximate Budget</label>
+            <select><option value="" disabled selected>Select budget range...</option>
+              <option>Under $1,000</option><option>$1,000 – $5,000</option><option>$5,000 – $10,000</option>
+              <option>$10,000 – $25,000</option><option>$25,000+</option></select></div>
+          <div class="form-group form-full"><label>Tell Us About Your Project *</label><textarea placeholder="Describe your project, goals, timeline, and anything else that would help us prepare for our call..."></textarea></div>
+          <button type="submit" class="btn btn-lg" style="width:100%;justify-content:center;cursor:pointer">Send Message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><span class="logo">Web<span>drix</span></span><p>Your trusted digital partner for web development, SEO, email marketing, graphic design, content writing, and digital marketing.</p><div class="socials"><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">f</div><div class="social-btn">▶</div></div></div><div class="footer-col"><h5>Services</h5><ul><li><a onclick="showPage('service-web')">Web Development</a></li><li><a onclick="showPage('service-seo')">SEO Services</a></li><li><a onclick="showPage('service-email')">Email Marketing</a></li><li><a onclick="showPage('service-design')">Graphic Design</a></li><li><a onclick="showPage('service-content')">Content Writing</a></li><li><a onclick="showPage('service-dm')">Digital Marketing</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('roi')">ROI Calculator</a></li><li><a onclick="showPage('blog')">Blog</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div><div class="footer-col"><h5>Legal</h5><ul><li><a>Privacy Policy</a></li><li><a>Terms of Service</a></li><li><a>Cookie Policy</a></li></ul></div><div class="footer-col"><h5>Contact Info</h5><div class="footer-contact-item"><span>📧</span><a href="mailto:info@webdrix.com">info@webdrix.com</a></div><div class="footer-contact-item"><span>📞</span><a href="tel:+966511794304">+966 51 179 4304</a></div><div class="footer-contact-item"><span>📍</span><span>Riyadh, Saudi Arabia</span></div><div class="footer-contact-item"><span>🕐</span><span>Sun–Thu: 9AM – 6PM AST</span></div></div></div><div class="footer-bottom"><p>© 2025 Webdrix. All rights reserved.</p><div style="display:flex;gap:1rem"><a style="font-size:0.8rem;color:var(--accent)">Privacy</a><a style="font-size:0.8rem;color:var(--accent)">Terms</a></div></div></div></footer>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+// PAGE NAVIGATION
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const p=document.getElementById('page-'+id);
+  if(p){p.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+  // Update nav active
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const map={home:'nl-home',about:'nl-about',services:'nl-services','service-web':'nl-services','service-seo':'nl-services','service-email':'nl-services','service-design':'nl-services','service-content':'nl-services','service-dm':'nl-services',roi:'nl-roi',blog:'nl-blog','blog-single':'nl-blog',contact:'nl-contact'};
+  if(map[id]){const el=document.getElementById(map[id]);if(el)el.classList.add('active');}
+}
+
+// FAQ ACCORDION
+document.addEventListener('click',e=>{
+  const q=e.target.closest('.faq-q');
+  if(!q)return;
+  const item=q.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+});
+
+// CONTACT FORM
+const cf=document.getElementById('contact-form');
+if(cf){cf.addEventListener('submit',e=>{
+  e.preventDefault();
+  const btn=cf.querySelector('button[type="submit"]');
+  btn.textContent='Sending...';btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='✓ Message Sent! We\'ll be in touch soon.';
+    btn.style.background='var(--accent3)';btn.style.borderColor='var(--accent3)';
+    cf.reset();
+    setTimeout(()=>{btn.innerHTML='Send Message';btn.disabled=false;btn.style.background='';btn.style.borderColor='';},4000);
+  },1500);
+});}
+
+// SERVICE SELECTOR (ROI)
+function toggleService(el){el.classList.toggle('selected');updateCalc();}
+
+// ROI CALCULATOR
+function updateCalc(){
+  const visitors=+document.getElementById('visitors').value;
+  const conv=+document.getElementById('conv').value;
+  const aov=+document.getElementById('aov').value;
+  const budget=+document.getElementById('budget').value;
+  const industry=+document.getElementById('industry').value;
+  const selected=document.querySelectorAll('.svc-opt.selected').length;
+
+  // Update display values
+  document.getElementById('visitors-val').textContent=visitors.toLocaleString();
+  document.getElementById('conv-val').textContent=conv+'%';
+  document.getElementById('aov-val').textContent='$'+aov.toLocaleString();
+  document.getElementById('budget-val').textContent='$'+budget.toLocaleString();
+
+  // Calculations
+  const currMonthly=(visitors*(conv/100)*aov);
+  const trafficMultiplier=1+(0.25*Math.log(1+selected)*industry);
+  const convMultiplier=1+(0.18*selected*industry);
+  const projVisitors=visitors*trafficMultiplier;
+  const projConv=conv*convMultiplier;
+  const projMonthly=projVisitors*(projConv/100)*aov;
+  const additionalMonthly=projMonthly-currMonthly;
+  const additionalAnnual=additionalMonthly*12;
+  const annualInvest=budget*12;
+  const roi=((additionalAnnual-annualInvest)/annualInvest)*100;
+
+  document.getElementById('curr-rev').textContent='$'+Math.round(currMonthly).toLocaleString();
+  document.getElementById('proj-rev').textContent='$'+Math.round(projMonthly).toLocaleString();
+  document.getElementById('traffic-inc').textContent='+'+Math.round((trafficMultiplier-1)*100)+'%';
+  document.getElementById('conv-inc').textContent='+'+Math.round((convMultiplier-1)*100)+'%';
+  document.getElementById('annual-invest').textContent='$'+Math.round(annualInvest).toLocaleString();
+  document.getElementById('proj-revenue').textContent='$'+Math.round(Math.max(0,additionalAnnual)).toLocaleString();
+  const roiRounded=Math.round(Math.max(0,roi));
+  document.getElementById('roi-pct').textContent=roiRounded+'%';
+  document.getElementById('roi-bar').style.width=Math.min(100,roiRounded/5)+'%';
+  document.getElementById('roi-bar-label').textContent='ROI: '+roiRounded+'%';
+}
+updateCalc();
+
+// SCROLL TO TOP
+window.addEventListener('scroll',()=>{
+  const st=document.getElementById('scrollTop');
+  if(window.scrollY>400)st.classList.add('visible');else st.classList.remove('visible');
+  // Reading progress bar
+  const rb=document.getElementById('readingBar');
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  rb.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+});
+
+// Set home as default active nav
+document.getElementById('nl-home').classList.add('active');
+</script>
+</body>
+</html>
